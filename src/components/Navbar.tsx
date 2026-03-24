@@ -23,7 +23,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
         <Link to="/" className="flex items-center gap-3" onClick={closeMenu}>
           <img
-            src="/images/logo.png"
+            src="/images/Logo.png"
             alt="Hoy Mismo Digital"
             className="h-12 w-auto object-contain sm:h-14 md:h-20"
           />
