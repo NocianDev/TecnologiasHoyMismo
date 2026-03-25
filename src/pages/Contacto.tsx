@@ -1,8 +1,36 @@
 export default function Contacto() {
   return (
     <main className="w-full max-w-full overflow-x-hidden">
+      {/* HEADER CON IMAGEN */}
+      <section className="section pt-8">
+        <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10">
+          <img
+            src="/images/Contacto2.jpg"
+            alt="Contacto"
+            className="block h-[200px] w-full object-cover sm:h-[260px] md:h-[320px]"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-transparent" />
+
+          <div className="absolute inset-0 flex max-w-full flex-col justify-center px-5 sm:px-8">
+            <span className="badge w-fit">Contacto</span>
+
+            <h1 className="mt-3 break-words text-2xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
+              Hablemos sobre tu próximo proyecto
+            </h1>
+
+            <p className="mt-2 max-w-[90%] text-sm leading-6 text-white/80 sm:text-base">
+              Cuéntanos tu idea y te ayudamos a convertirla en una solución real,
+              automatizada y lista para escalar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTENIDO */}
       <section className="section pt-8">
         <div className="grid w-full max-w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
+          {/* IZQUIERDA */}
           <div className="min-w-0">
             <h2 className="text-3xl font-bold title-gradient sm:text-4xl">
               Información de contacto
@@ -49,6 +77,7 @@ export default function Contacto() {
             </div>
           </div>
 
+          {/* DERECHA */}
           <div className="card h-fit min-w-0">
             <h2 className="text-2xl font-bold text-yellow-400 sm:text-3xl">
               ¿Qué tipo de proyectos atendemos?
