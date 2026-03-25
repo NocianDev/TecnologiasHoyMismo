@@ -6,8 +6,23 @@
 /* BASE */
 /* ============================= */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   @apply bg-slate-950 text-white antialiased;
+  overflow-x: hidden;
 }
 
 /* ============================= */
@@ -15,7 +30,9 @@ body {
 /* ============================= */
 
 .section {
-  @apply px-6 py-16 lg:px-16;
+  @apply px-5 py-12 sm:px-6 lg:px-16 lg:py-16;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ============================= */
@@ -27,7 +44,7 @@ body {
 }
 
 .subtitle {
-  @apply mt-6 text-lg text-white/70 leading-relaxed;
+  @apply mt-5 text-base leading-8 text-white/70 sm:text-lg;
 }
 
 .badge {
@@ -51,16 +68,20 @@ body {
 /* ============================= */
 
 .card {
-  @apply rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl;
+  @apply rounded-[2rem] border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl sm:p-6;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ============================= */
-/* HERO */
+/* HERO HOME */
 /* ============================= */
 
 .home-hero-grid {
   display: grid;
   gap: 40px;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -81,15 +102,15 @@ body {
 
 .quick-nav-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: 2rem;
+  width: 100%;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
+@media (min-width: 1024px) {
   .quick-nav-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
   }
 }
 
@@ -102,28 +123,22 @@ body {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
   border-radius: 1.5rem;
-
   padding: 18px 14px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   min-height: 120px;
-
   transition: all 0.25s ease;
   cursor: pointer;
+  width: 100%;
+  max-width: 100%;
 }
 
 .quick-nav-card:hover {
   transform: translateY(-4px);
   border-color: rgba(250, 204, 21, 0.4);
 }
-
-/* ============================= */
-/* QUICK NAV CONTENT */
-/* ============================= */
 
 .quick-nav-icon {
   font-size: 28px;

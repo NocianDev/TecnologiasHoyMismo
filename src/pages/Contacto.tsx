@@ -1,36 +1,9 @@
 export default function Contacto() {
   return (
-    <main>
-      {/* HEADER CON IMAGEN */}
-      <section className="section pt-8 md:pt-10">
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10">
-          <img
-            src="/images/contacto.jpg"
-            alt="Contacto"
-            className="h-[220px] w-full object-cover sm:h-[260px] md:h-[320px]"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-transparent"></div>
-
-          <div className="absolute inset-0 flex flex-col justify-center px-5 sm:px-8">
-            <span className="badge w-fit">Contacto</span>
-
-            <h1 className="mt-4 max-w-3xl text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-              Hablemos sobre tu próximo proyecto
-            </h1>
-
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-white/80 sm:text-base">
-              Cuéntanos tu idea y te ayudamos a convertirla en una solución real,
-              automatizada y lista para escalar.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CONTENIDO */}
+    <main className="w-full max-w-full overflow-x-hidden">
       <section className="section pt-8">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          <div>
+        <div className="grid w-full max-w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
+          <div className="min-w-0">
             <h2 className="text-3xl font-bold title-gradient sm:text-4xl">
               Información de contacto
             </h2>
@@ -47,17 +20,19 @@ export default function Contacto() {
                 <p className="mt-3 text-white/75">
                   Atención directa para cotizaciones y dudas.
                 </p>
-                <p className="mt-5 text-2xl font-semibold text-white">
+                <p className="mt-5 break-words text-2xl font-semibold text-white">
                   +52 81 0000 0000
                 </p>
               </div>
 
               <div className="card">
-                <h3 className="text-2xl font-bold text-yellow-400">Correo electrónico</h3>
+                <h3 className="text-2xl font-bold text-yellow-400">
+                  Correo electrónico
+                </h3>
                 <p className="mt-3 text-white/75">
                   Para propuestas o información formal.
                 </p>
-                <p className="mt-5 break-words text-lg font-medium text-white sm:text-xl">
+                <p className="mt-5 break-all text-lg font-medium text-white sm:text-xl">
                   contacto@hoymismotecnologia.com
                 </p>
               </div>
@@ -74,7 +49,7 @@ export default function Contacto() {
             </div>
           </div>
 
-          <div className="card h-fit">
+          <div className="card h-fit min-w-0">
             <h2 className="text-2xl font-bold text-yellow-400 sm:text-3xl">
               ¿Qué tipo de proyectos atendemos?
             </h2>
