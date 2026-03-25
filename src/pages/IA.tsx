@@ -1,54 +1,25 @@
+import PortfolioCard from "../components/PortfolioCard";
+import PageHero from "../components/PageHero";
+import { IA_PROJECTS } from "../data/portfolioData";
+
 export default function IA() {
   return (
-    <div>
+    <main>
+      <PageHero
+        badge="Inteligencia Artificial"
+        title="IA aplicada a decisiones, automatización y análisis avanzado"
+        description="Construimos soluciones con inteligencia artificial para observabilidad, evaluación ética, motores cognitivos, automatización empresarial y sistemas multi-modelo orientados a resultados reales."
+        image="/images/AI.png"
+        imageAlt="Inteligencia artificial, redes neuronales y sistemas cognitivos"
+      />
 
-      {/* HERO */}
-      <section className="section grid md:grid-cols-2 gap-12 items-center">
-
-        <div>
-          <h1 className="text-5xl font-bold title-gradient">
-            Inteligencia Artificial
-          </h1>
-
-          <p className="subtitle">
-            Automatizamos tareas, analizamos datos y creamos asistentes
-            inteligentes que trabajan por ti.
-          </p>
+      <section className="section pt-6">
+        <div className="mt-6 space-y-8">
+          {IA_PROJECTS.map((project) => (
+            <PortfolioCard key={project.title} project={project} />
+          ))}
         </div>
-
-        <img
-          src="/images/AI.jpg"
-          className="w-[650px] rounded-2xl shadow-2xl"
-        />
-
       </section>
-
-      {/* BENEFICIOS */}
-      <section className="section grid md:grid-cols-3 gap-6">
-
-        <div className="card">
-          <h3 className="text-yellow-400 font-bold">Automatización</h3>
-          <p className="text-white/75">
-            Reduce trabajo manual y errores.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400 font-bold">Análisis</h3>
-          <p className="text-white/75">
-            Obtén información clave de tus datos.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400 font-bold">Escalabilidad</h3>
-          <p className="text-white/75">
-            Crece sin aumentar costos.
-          </p>
-        </div>
-
-      </section>
-
-    </div>
+    </main>
   );
 }

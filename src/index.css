@@ -2,109 +2,169 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --bg: #090b1a;
-  --card: rgba(255, 255, 255, 0.06);
-  --line: rgba(255, 255, 255, 0.1);
-  --text: #f8fafc;
-  --muted: rgba(248, 250, 252, 0.72);
-  --yellow-1: #facc15;
-  --yellow-2: #f59e0b;
-}
-
-html,
-body,
-#root {
-  min-height: 100%;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+/* ============================= */
+/* BASE */
+/* ============================= */
 
 body {
-  color: var(--text);
-  background:
-    radial-gradient(circle at 10% 15%, rgba(250, 204, 21, 0.18), transparent 22%),
-    radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.14), transparent 24%),
-    radial-gradient(circle at 70% 60%, rgba(250, 204, 21, 0.10), transparent 20%),
-    radial-gradient(circle at 20% 85%, rgba(59, 130, 246, 0.10), transparent 20%),
-    linear-gradient(135deg, #070816 0%, #0b0f24 45%, #101533 100%);
-  background-attachment: fixed;
+  @apply bg-slate-950 text-white antialiased;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
-  opacity: 0.35;
-}
+/* ============================= */
+/* LAYOUT GENERAL */
+/* ============================= */
 
 .section {
-  @apply mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24;
+  @apply px-6 py-16 lg:px-16;
 }
 
+/* ============================= */
+/* TEXTOS */
+/* ============================= */
+
 .title-gradient {
-  background: linear-gradient(90deg, #fde047, #facc15, #f59e0b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  @apply bg-gradient-to-r from-yellow-400 to-yellow-300 bg-clip-text text-transparent;
 }
 
 .subtitle {
-  @apply mt-5 max-w-3xl text-lg leading-8 text-white/75;
+  @apply mt-6 text-lg text-white/70 leading-relaxed;
 }
 
 .badge {
-  @apply inline-flex items-center rounded-full border border-yellow-400/25 bg-yellow-400/10 px-4 py-2 text-sm font-medium text-yellow-300 backdrop-blur-md;
+  @apply inline-block rounded-full border border-yellow-400/30 bg-yellow-400/10 px-4 py-1 text-sm text-yellow-300;
 }
 
-.card {
-  @apply rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition duration-300;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 50px rgba(250, 204, 21, 0.10);
-}
-
-.glow-yellow {
-  box-shadow: 0 0 60px rgba(250, 204, 21, 0.18);
-}
+/* ============================= */
+/* BOTONES */
+/* ============================= */
 
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-2xl px-6 py-3 font-semibold text-black transition duration-300;
-  background: linear-gradient(135deg, #fde047, #facc15, #f59e0b);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 35px rgba(250, 204, 21, 0.28);
+  @apply rounded-xl bg-yellow-400 px-6 py-3 font-semibold text-black transition hover:bg-yellow-300;
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur-md transition duration-300;
+  @apply rounded-xl border border-white/20 px-6 py-3 font-semibold text-white transition hover:bg-white/10;
 }
 
-.btn-secondary:hover {
-  border-color: rgba(250, 204, 21, 0.35);
-  background: rgba(255, 255, 255, 0.08);
+/* ============================= */
+/* CARD GENERAL */
+/* ============================= */
+
+.card {
+  @apply rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl;
 }
+
+/* ============================= */
+/* HERO */
+/* ============================= */
+
+.home-hero-grid {
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .home-hero-grid {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.home-hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ============================= */
+/* QUICK NAV GRID */
+/* ============================= */
+
+.quick-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .quick-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================= */
+/* QUICK NAV CARD */
+/* ============================= */
+
+.quick-nav-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+
+  padding: 18px 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  min-height: 120px;
+
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.quick-nav-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(250, 204, 21, 0.4);
+}
+
+/* ============================= */
+/* QUICK NAV CONTENT */
+/* ============================= */
+
+.quick-nav-icon {
+  font-size: 28px;
+  font-weight: 800;
+  color: #facc15;
+}
+
+.quick-nav-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.quick-nav-text {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ============================= */
+/* LISTAS */
+/* ============================= */
 
 .info-list li {
-  @apply flex items-start gap-3 text-white/80;
+  @apply flex items-start gap-3;
 }
 
-.info-list li span {
-  @apply mt-1 text-yellow-400;
+.info-list span {
+  @apply text-yellow-400;
 }
-.card img {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
-  border: 1px solid rgba(255,255,255,0.08);
+
+/* ============================= */
+/* SCROLL */
+/* ============================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
 }

@@ -1,51 +1,25 @@
+import PortfolioCard from "../components/PortfolioCard";
+import PageHero from "../components/PageHero";
+import { CHATBOT_PROJECTS } from "../data/portfolioData";
+
 export default function Chatbots() {
   return (
-    <div>
+    <main>
+      <PageHero
+        badge="Chatbots y Voz IA"
+        title="Asistentes conversacionales, voz inteligente y atención 24/7"
+        description="Creamos chatbots, asistentes de voz y sistemas multi-agente que automatizan soporte, ventas, seguimiento y atención al cliente con integración a canales reales y lógica avanzada."
+        image="/images/Chatbot.png"
+        imageAlt="Chatbots, agentes conversacionales y voz inteligente"
+      />
 
-      <section className="section grid md:grid-cols-2 gap-12 items-center">
-
-        <img
-          src="/images/Chatbot.jpg"
-          className="w-[600px] rounded-2xl shadow-2xl"
-        />
-
-        <div>
-          <h1 className="text-5xl font-bold title-gradient">
-            Chatbots Inteligentes
-          </h1>
-
-          <p className="subtitle">
-            Automatiza la atención al cliente y aumenta tus ventas 24/7.
-          </p>
+      <section className="section pt-6">
+        <div className="mt-6 space-y-8">
+          {CHATBOT_PROJECTS.map((project) => (
+            <PortfolioCard key={project.title} project={project} />
+          ))}
         </div>
-
       </section>
-
-      <section className="section grid md:grid-cols-3 gap-6">
-
-        <div className="card">
-          <h3 className="text-yellow-400">Ventas</h3>
-          <p className="text-white/75">
-            Genera clientes automáticamente.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400">Soporte</h3>
-          <p className="text-white/75">
-            Responde dudas al instante.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400">Disponibilidad</h3>
-          <p className="text-white/75">
-            Funciona 24/7 sin descanso.
-          </p>
-        </div>
-
-      </section>
-
-    </div>
+    </main>
   );
 }

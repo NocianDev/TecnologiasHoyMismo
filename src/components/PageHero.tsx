@@ -1,0 +1,41 @@
+type PageHeroProps = {
+  badge: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+};
+
+export default function PageHero({
+  badge,
+  title,
+  description,
+  image,
+  imageAlt,
+}: PageHeroProps) {
+  return (
+    <section className="section pt-10">
+      <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="max-w-3xl">
+          <span className="badge">{badge}</span>
+
+          <h1 className="mt-5 text-5xl font-bold leading-tight title-gradient md:text-6xl">
+            {title}
+          </h1>
+
+          <p className="subtitle max-w-2xl">{description}</p>
+        </div>
+
+        <div className="relative flex justify-center lg:justify-end">
+          <div className="absolute inset-0 rounded-[2rem] bg-yellow-400/10 blur-3xl"></div>
+
+          <img
+            src={image}
+            alt={imageAlt}
+            className="relative z-10 w-full max-w-[820px] rounded-[2rem] border border-white/10 object-cover shadow-2xl h-[320px] lg:h-[420px]"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}

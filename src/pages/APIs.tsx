@@ -1,51 +1,25 @@
+import PortfolioCard from "../components/PortfolioCard";
+import PageHero from "../components/PageHero";
+import { API_PROJECTS } from "../data/portfolioData";
+
 export default function APIs() {
   return (
-    <div>
+    <main>
+      <PageHero
+        badge="APIs e Integraciones"
+        title="Backend, servicios cloud e integración entre sistemas"
+        description="Diseñamos APIs empresariales, conectores, flujos en tiempo real y arquitecturas modernas para integrar plataformas, automatizar operaciones y centralizar información crítica."
+        image="/images/API.png"
+        imageAlt="Integraciones, backend y arquitectura de APIs"
+      />
 
-      <section className="section grid md:grid-cols-2 gap-12 items-center">
-
-        <div>
-          <h1 className="text-5xl font-bold title-gradient">
-            APIs e Integraciones
-          </h1>
-
-          <p className="subtitle">
-            Conectamos tus sistemas para crear flujos automáticos eficientes.
-          </p>
+      <section className="section pt-6">
+        <div className="mt-6 space-y-8">
+          {API_PROJECTS.map((project) => (
+            <PortfolioCard key={project.title} project={project} />
+          ))}
         </div>
-
-        <img
-          src="/images/API.jpg"
-          className="w-[650px] rounded-2xl shadow-2xl"
-        />
-
       </section>
-
-      <section className="section grid md:grid-cols-3 gap-6">
-
-        <div className="card">
-          <h3 className="text-yellow-400">Integración</h3>
-          <p className="text-white/75">
-            Conecta plataformas fácilmente.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400">Seguridad</h3>
-          <p className="text-white/75">
-            Datos protegidos.
-          </p>
-        </div>
-
-        <div className="card">
-          <h3 className="text-yellow-400">Velocidad</h3>
-          <p className="text-white/75">
-            Procesos rápidos y eficientes.
-          </p>
-        </div>
-
-      </section>
-
-    </div>
+    </main>
   );
 }

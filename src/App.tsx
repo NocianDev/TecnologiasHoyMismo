@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
+import WhatsAppButton from "./components/WhatsAppButton";
 
 import Home from "./pages/Home";
 import Servicios from "./pages/Servicios";
@@ -22,6 +22,8 @@ function App() {
         <Route path="/chatbots" element={<Chatbots />} />
         <Route path="/contacto" element={<Contacto />} />
       </Routes>
+
+      <WhatsAppButton />
     </>
   );
 }

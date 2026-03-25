@@ -1,81 +1,25 @@
+import PortfolioCard from "../components/PortfolioCard";
+import PageHero from "../components/PageHero";
+import { SERVICE_PROJECTS } from "../data/portfolioData";
+
 export default function Servicios() {
   return (
-    <div>
+    <main>
+      <PageHero
+        badge="Servicios y Plataformas"
+        title="Sistemas web, dashboards y soluciones listas para operar"
+        description="Desarrollamos plataformas, paneles administrativos, sistemas internos y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real para empresas."
+        image="/images/System.png"
+        imageAlt="Plataformas, dashboards y sistemas empresariales"
+      />
 
-      {/* HERO */}
-      <section className="section grid md:grid-cols-2 gap-12 items-center">
-
-        <div>
-          <h1 className="text-5xl font-bold title-gradient">
-            Nuestros Servicios
-          </h1>
-
-          <p className="subtitle">
-            Ofrecemos soluciones digitales completas para empresas que buscan
-            modernizarse, automatizar procesos y aumentar sus ingresos.
-          </p>
+      <section className="section pt-6">
+        <div className="mt-6 space-y-8">
+          {SERVICE_PROJECTS.map((project) => (
+            <PortfolioCard key={project.title} project={project} />
+          ))}
         </div>
-
-        <img
-          src="/images/System.jpg"
-          className="w-[600px] rounded-2xl shadow-2xl"
-        />
-
       </section>
-
-      {/* LISTA DETALLADA */}
-      <section className="section grid md:grid-cols-2 gap-8">
-
-        <div className="card">
-          <h2 className="text-yellow-400 font-bold text-xl">
-            Desarrollo Web
-          </h2>
-          <p className="mt-2 text-white/75">
-            Creamos páginas web profesionales, rápidas y optimizadas para generar
-            conversiones.
-          </p>
-        </div>
-
-        <div className="card">
-          <h2 className="text-yellow-400 font-bold text-xl">
-            Automatización
-          </h2>
-          <p className="mt-2 text-white/75">
-            Automatizamos procesos repetitivos para mejorar productividad.
-          </p>
-        </div>
-
-        <div className="card">
-          <h2 className="text-yellow-400 font-bold text-xl">
-            APIs
-          </h2>
-          <p className="mt-2 text-white/75">
-            Conectamos plataformas para crear sistemas eficientes.
-          </p>
-        </div>
-
-        <div className="card">
-          <h2 className="text-yellow-400 font-bold text-xl">
-            Inteligencia Artificial
-          </h2>
-          <p className="mt-2 text-white/75">
-            Implementamos IA para análisis, automatización y atención.
-          </p>
-        </div>
-
-      </section>
-
-      {/* CTA */}
-      <section className="section text-center">
-        <h2 className="text-3xl font-bold title-gradient">
-          Construyamos tu sistema ideal
-        </h2>
-
-        <button className="btn-primary mt-6">
-          Solicitar servicio
-        </button>
-      </section>
-
-    </div>
+    </main>
   );
 }

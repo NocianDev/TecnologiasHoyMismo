@@ -1,94 +1,116 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
   return (
     <main>
       {/* HERO */}
-      <section className="section grid items-center gap-14 lg:grid-cols-2">
-        <div>
-          <span className="badge">Soluciones digitales de nueva generación</span>
+      <section className="section">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="flex min-h-[720px] flex-col justify-center">
+            <h1 className="mt-2 text-5xl font-extrabold leading-[0.95] md:text-7xl">
+              <span className="title-gradient">
+                Tecnología que vende, automatiza y escala
+              </span>
+            </h1>
 
-          <h1 className="mt-6 text-5xl font-extrabold leading-tight md:text-6xl">
-            <span className="title-gradient">Diseñamos tecnología que vende, automatiza y escala</span>
-          </h1>
+            <p className="subtitle max-w-2xl">
+              Hoy Mismo Tecnología desarrolla páginas web profesionales con enfoque
+              empresarial, APIs, chatbots disponibles 24/7, sistemas personalizados,
+              automatizaciones y asistentes con inteligencia artificial. Creamos
+              herramientas modernas, funcionales y enfocadas en resultados reales.
+            </p>
 
-          <p className="subtitle">
-            En Hoy Mismo Digital desarrollamos páginas web profesionales, sistemas personalizados,
-            automatizaciones, APIs, asistentes con inteligencia artificial y chatbots para negocios
-            que quieren crecer de verdad. No hacemos sitios genéricos: construimos herramientas
-            útiles, modernas y enfocadas en resultados.
-          </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link to="/contacto" className="btn-primary">
+                Solicitar cotización
+              </Link>
+              <Link to="/servicios" className="btn-secondary">
+                Explorar servicios
+              </Link>
+            </div>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a href="/contacto" className="btn-primary">
-              Solicitar cotización
-            </a>
-            <a href="/servicios" className="btn-secondary">
-              Explorar servicios
-            </a>
+            <div className="quick-nav-grid">
+              <Link to="/servicios" className="quick-nav-card">
+                <div className="quick-nav-icon">Web</div>
+                <div className="quick-nav-title">Desarrollo</div>
+                <p className="quick-nav-text">
+                  Sitios modernos, profesionales y optimizados para negocio.
+                </p>
+              </Link>
+
+              <Link to="/ia" className="quick-nav-card">
+                <div className="quick-nav-icon">IA</div>
+                <div className="quick-nav-title">Inteligencia</div>
+                <p className="quick-nav-text">
+                  Automatización inteligente para procesos, análisis y asistencia.
+                </p>
+              </Link>
+
+              <Link to="/apis" className="quick-nav-card">
+                <div className="quick-nav-icon">APIs</div>
+                <div className="quick-nav-title">Integraciones</div>
+                <p className="quick-nav-text">
+                  Conectamos sistemas, formularios, CRM y servicios externos.
+                </p>
+              </Link>
+
+              <Link to="/chatbots" className="quick-nav-card">
+                <div className="quick-nav-icon">Bots</div>
+                <div className="quick-nav-title">Atención 24/7</div>
+                <p className="quick-nav-text">
+                  Bots para soporte, ventas, captación de clientes y seguimiento.
+                </p>
+              </Link>
+            </div>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-            <div className="card p-4 text-center">
-              <p className="text-3xl font-bold text-yellow-400">Web</p>
-              <p className="mt-1 text-sm text-white/70">Diseño y desarrollo</p>
-            </div>
-            <div className="card p-4 text-center">
-              <p className="text-3xl font-bold text-yellow-400">IA</p>
-              <p className="mt-1 text-sm text-white/70">Automatización inteligente</p>
-            </div>
-            <div className="card p-4 text-center">
-              <p className="text-3xl font-bold text-yellow-400">APIs</p>
-              <p className="mt-1 text-sm text-white/70">Integración entre sistemas</p>
-            </div>
-            <div className="card p-4 text-center">
-              <p className="text-3xl font-bold text-yellow-400">Bots</p>
-              <p className="mt-1 text-sm text-white/70">Atención 24/7</p>
-            </div>
-          </div>
-        </div>
+          <div className="relative flex items-center justify-center">
+            <div className="absolute left-[5%] top-[10%] h-56 w-56 rounded-full bg-yellow-400/10 blur-3xl"></div>
+            <div className="absolute bottom-[10%] right-[5%] h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+            <div className="absolute inset-[8%] rounded-full border border-yellow-400/10"></div>
 
-        <div className="relative flex justify-center">
-          <div className="absolute h-[420px] w-[420px] rounded-full bg-yellow-400/20 blur-3xl"></div>
-          <img
-            src="/images/Hero.jpg"
-            alt="Soluciones digitales"
-            className="relative z-10 w-full max-w-[680px] rounded-[2rem] border border-white/10 object-cover shadow-2xl glow-yellow"
-          />
+            <img
+  src="/images/Hero3.png"
+  alt="Tecnología y automatización"
+   className="relative z-10 w-full max-h-[520px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
+/>
+          </div>
         </div>
       </section>
 
-      {/* PROPUESTA DE VALOR */}
+      {/* BLOQUES INFORMATIVOS */}
       <section className="section">
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="card">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-300">
               Enfoque estratégico
             </p>
-            <h2 className="mt-4 text-2xl font-bold">No solo se ve bien: trabaja para tu negocio</h2>
+            <h2 className="mt-4 text-2xl font-bold">Tecnología con propósito</h2>
             <p className="mt-4 text-white/75">
-              Cada proyecto se plantea para atraer clientes, comunicar confianza, automatizar tareas
-              y mejorar tus procesos internos. Buscamos que la tecnología te ahorre tiempo y te ayude a vender más.
+              Cada proyecto se desarrolla con un objetivo claro: mejorar presencia digital,
+              automatizar procesos, optimizar operación y aumentar oportunidades de venta.
             </p>
           </div>
 
           <div className="card">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-300">
-              Diseño premium
+              Diseño y experiencia
             </p>
-            <h2 className="mt-4 text-2xl font-bold">Interfaces modernas, limpias y con identidad</h2>
+            <h2 className="mt-4 text-2xl font-bold">Imagen moderna y profesional</h2>
             <p className="mt-4 text-white/75">
-              Creamos experiencias visuales con estética tech, jerarquía clara, movimiento visual,
-              colores bien trabajados y una sensación profesional que eleva la imagen de tu empresa.
+              Diseñamos interfaces con estilo tecnológico, jerarquía visual clara y una
+              experiencia de usuario que transmite solidez, confianza y modernidad.
             </p>
           </div>
 
           <div className="card">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-yellow-300">
-              Desarrollo real
+              Desarrollo escalable
             </p>
-            <h2 className="mt-4 text-2xl font-bold">Código escalable y preparado para crecer</h2>
+            <h2 className="mt-4 text-2xl font-bold">Soluciones listas para crecer</h2>
             <p className="mt-4 text-white/75">
-              Desde landing pages hasta sistemas completos: trabajamos con estructura clara,
-              rutas limpias, rendimiento optimizado y bases que permiten futuras integraciones.
+              Desde una landing page hasta sistemas completos con automatizaciones, APIs
+              e inteligencia artificial, dejamos una base bien estructurada para evolucionar.
             </p>
           </div>
         </div>
@@ -97,7 +119,6 @@ export default function Home() {
       {/* SERVICIOS DESTACADOS */}
       <section className="section">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="badge">Servicios principales</span>
           <h2 className="mt-5 text-4xl font-bold title-gradient">
             Todo lo que una empresa moderna necesita para digitalizarse
           </h2>
@@ -109,38 +130,54 @@ export default function Home() {
 
         <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           <div className="card">
-            <img src="/images/Web.jpg" alt="Páginas web" className="mb-6 h-32 w-full rounded-2xl object-cover" />
+            <img
+              src="/images/Web.png"
+              alt="Páginas web"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
             <h3 className="text-xl font-bold text-yellow-400">Páginas web profesionales</h3>
             <p className="mt-3 text-white/75">
-              Sitios modernos, responsivos y optimizados para mostrar tus servicios, generar confianza
-              y convertir visitantes en clientes.
+              Sitios modernos, responsivos y optimizados para mostrar tus servicios,
+              generar confianza y convertir visitantes en clientes.
             </p>
           </div>
 
           <div className="card">
-            <img src="/images/AI.jpg" alt="Inteligencia artificial" className="mb-6 h-32 w-full rounded-2xl object-cover" />
+            <img
+              src="/images/AI.png"
+              alt="Automatización con IA"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
             <h3 className="text-xl font-bold text-yellow-400">Automatización con IA</h3>
             <p className="mt-3 text-white/75">
-              Implementamos herramientas inteligentes que responden, clasifican, asisten y agilizan
-              procesos sin depender siempre de intervención manual.
+              Implementamos herramientas inteligentes que responden, clasifican,
+              asisten y agilizan procesos sin depender siempre de intervención manual.
             </p>
           </div>
 
           <div className="card">
-            <img src="/images/API.jpg" alt="APIs" className="mb-6 h-32 w-full rounded-2xl object-cover" />
+            <img
+              src="/images/API.png"
+              alt="APIs e integraciones"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
             <h3 className="text-xl font-bold text-yellow-400">APIs e integraciones</h3>
             <p className="mt-3 text-white/75">
-              Conectamos sistemas, plataformas, formularios, CRM, bases de datos y servicios externos
-              para crear flujos más inteligentes.
+              Conectamos sistemas, plataformas, formularios, CRM, bases de datos
+              y servicios externos para crear flujos más inteligentes.
             </p>
           </div>
 
           <div className="card">
-            <img src="/images/Chatbot.jpg" alt="Chatbots" className="mb-6 h-32 w-full rounded-2xl object-cover" />
+            <img
+              src="/images/Chatbot.png"
+              alt="Chatbots para ventas y soporte"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
             <h3 className="text-xl font-bold text-yellow-400">Chatbots para ventas y soporte</h3>
             <p className="mt-3 text-white/75">
-              Bots para WhatsApp, web o procesos internos que responden dudas, filtran clientes,
-              capturan datos y mejoran tu atención.
+              Bots para WhatsApp, web o procesos internos que responden dudas,
+              filtran clientes, capturan datos y mejoran tu atención.
             </p>
           </div>
         </div>
@@ -151,7 +188,7 @@ export default function Home() {
         <div className="relative flex justify-center">
           <div className="absolute h-[380px] w-[380px] rounded-full bg-yellow-400/15 blur-3xl"></div>
           <img
-            src="/images/System.jpg"
+            src="/images/System.png"
             alt="Proceso de trabajo"
             className="relative z-10 w-full max-w-[640px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
           />
@@ -243,7 +280,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TECNOLOGÍAS */}
+      {/* STACK MODERNO */}
       <section className="section">
         <div className="card">
           <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr]">
@@ -253,13 +290,25 @@ export default function Home() {
                 Tecnologías actuales para proyectos rápidos, escalables y visualmente potentes
               </h2>
               <p className="subtitle">
-                Trabajamos con herramientas modernas para crear experiencias fluidas, adaptables y listas
-                para crecer con tu empresa.
+                Trabajamos con herramientas modernas para crear experiencias fluidas,
+                adaptables y listas para crecer con tu empresa. Nuestro enfoque combina
+                frontend ágil, integraciones, automatización y soluciones tecnológicas
+                pensadas para rendimiento real.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {["React", "Vite", "TypeScript", "Tailwind", "Node.js", "APIs", "Automation", "AI", "Responsive"].map((item) => (
+              {[
+                "React",
+                "Vite",
+                "TypeScript",
+                "Tailwind",
+                "Node.js",
+                "APIs",
+                "Automation",
+                "AI",
+                "Responsive",
+              ].map((item) => (
                 <div
                   key={item}
                   className="rounded-2xl border border-white/10 bg-black/20 px-4 py-5 text-center font-medium text-white/85"
@@ -272,7 +321,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* PREGUNTAS FRECUENTES */}
       <section className="section">
         <div className="mx-auto max-w-3xl text-center">
           <span className="badge">Preguntas frecuentes</span>
@@ -285,22 +334,29 @@ export default function Home() {
           <div className="card">
             <h3 className="text-xl font-bold text-yellow-400">¿Solo hacen páginas web?</h3>
             <p className="mt-3 text-white/75">
-              No. También desarrollamos automatizaciones, integraciones por API, chatbots, asistentes inteligentes
-              y sistemas personalizados según las necesidades del proyecto.
+              No. También desarrollamos automatizaciones, integraciones por API,
+              chatbots, asistentes inteligentes y sistemas personalizados según
+              las necesidades del proyecto.
             </p>
           </div>
 
           <div className="card">
-            <h3 className="text-xl font-bold text-yellow-400">¿Pueden adaptar la solución a mi negocio?</h3>
+            <h3 className="text-xl font-bold text-yellow-400">
+              ¿Pueden adaptar la solución a mi negocio?
+            </h3>
             <p className="mt-3 text-white/75">
-              Sí. La idea es construir algo alineado a tu giro, tu imagen y tus procesos, no una plantilla genérica.
+              Sí. La idea es construir algo alineado a tu giro, tu imagen,
+              tus procesos y tus objetivos, no una plantilla genérica.
             </p>
           </div>
 
           <div className="card">
-            <h3 className="text-xl font-bold text-yellow-400">¿Se puede escalar después?</h3>
+            <h3 className="text-xl font-bold text-yellow-400">
+              ¿Se puede escalar después?
+            </h3>
             <p className="mt-3 text-white/75">
-              Sí. Dejamos bases preparadas para añadir nuevas funciones, formularios, módulos, conexiones o mejoras visuales.
+              Sí. Dejamos bases preparadas para añadir nuevas funciones, módulos,
+              automatizaciones, formularios, conexiones o mejoras visuales.
             </p>
           </div>
         </div>
@@ -313,17 +369,18 @@ export default function Home() {
             Tu negocio puede verse mejor, vender mejor y operar mejor
           </h2>
           <p className="mx-auto mt-5 max-w-3xl text-lg text-white/75">
-            Si buscas una presencia digital seria, moderna y útil, podemos ayudarte a construirla con una identidad tech,
-            estructura profesional y funciones que realmente aporten valor.
+            Si buscas una presencia digital seria, moderna y útil, podemos ayudarte
+            a construirla con una identidad tecnológica, estructura profesional y
+            funciones que realmente aporten valor.
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="/contacto" className="btn-primary">
+            <Link to="/contacto" className="btn-primary">
               Hablar sobre mi proyecto
-            </a>
-            <a href="/ia" className="btn-secondary">
+            </Link>
+            <Link to="/ia" className="btn-secondary">
               Ver soluciones con IA
-            </a>
+            </Link>
           </div>
         </div>
       </section>

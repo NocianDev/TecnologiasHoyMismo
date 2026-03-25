@@ -21,24 +21,23 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
-        <Link to="/" className="flex items-center gap-3" onClick={closeMenu}>
+        <Link to="/" className="flex items-center gap-4" onClick={closeMenu}>
           <img
             src="/images/Logo.png"
-            alt="Hoy Mismo Digital"
-            className="h-12 w-auto object-contain sm:h-14 md:h-20"
+            alt="Hoy Mismo Tecnología"
+            className="h-16 w-auto object-contain sm:h-20 md:h-24"
           />
 
           <div className="hidden sm:block">
-            <p className="text-sm font-semibold tracking-wide text-yellow-400">
-              HOY MISMO DIGITAL
+            <p className="text-base font-semibold tracking-wide text-yellow-400 md:text-lg">
+              HOY MISMO TECNOLOGÍA
             </p>
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white/60 md:text-sm">
               Web, IA, APIs y automatización
             </p>
           </div>
         </Link>
 
-        {/* Desktop */}
         <nav className="hidden items-center gap-6 text-[17px] font-medium md:flex">
           <NavLink to="/" className={navLinkClass}>
             Inicio
@@ -60,7 +59,6 @@ export default function Navbar() {
           </NavLink>
         </nav>
 
-        {/* Botón hamburguesa móvil */}
         <button
           type="button"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -88,7 +86,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menú móvil */}
       <div
         className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
           open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
@@ -99,35 +96,19 @@ export default function Navbar() {
             <NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>
               Inicio
             </NavLink>
-            <NavLink
-              to="/servicios"
-              className={mobileNavLinkClass}
-              onClick={closeMenu}
-            >
+            <NavLink to="/servicios" className={mobileNavLinkClass} onClick={closeMenu}>
               Servicios
             </NavLink>
             <NavLink to="/ia" className={mobileNavLinkClass} onClick={closeMenu}>
               IA
             </NavLink>
-            <NavLink
-              to="/apis"
-              className={mobileNavLinkClass}
-              onClick={closeMenu}
-            >
+            <NavLink to="/apis" className={mobileNavLinkClass} onClick={closeMenu}>
               APIs
             </NavLink>
-            <NavLink
-              to="/chatbots"
-              className={mobileNavLinkClass}
-              onClick={closeMenu}
-            >
+            <NavLink to="/chatbots" className={mobileNavLinkClass} onClick={closeMenu}>
               Chatbots
             </NavLink>
-            <NavLink
-              to="/contacto"
-              className={mobileNavLinkClass}
-              onClick={closeMenu}
-            >
+            <NavLink to="/contacto" className={mobileNavLinkClass} onClick={closeMenu}>
               Contacto
             </NavLink>
           </div>
