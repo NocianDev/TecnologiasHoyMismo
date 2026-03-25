@@ -14,16 +14,18 @@ export default function PageHero({
   imageAlt,
 }: PageHeroProps) {
   return (
-    <section className="section pt-10">
-      <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+    <section className="section pt-8 md:pt-10">
+      <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
         <div className="max-w-3xl">
           <span className="badge">{badge}</span>
 
-          <h1 className="mt-5 text-5xl font-bold leading-tight title-gradient md:text-6xl">
+          <h1 className="mt-4 text-4xl font-bold leading-tight title-gradient sm:text-5xl md:text-6xl">
             {title}
           </h1>
 
-          <p className="subtitle max-w-2xl">{description}</p>
+          <p className="mt-5 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
+            {description}
+          </p>
         </div>
 
         <div className="relative flex justify-center lg:justify-end">
@@ -32,7 +34,7 @@ export default function PageHero({
           <img
             src={image}
             alt={imageAlt}
-            className="relative z-10 w-full max-w-[820px] rounded-[2rem] border border-white/10 object-cover shadow-2xl h-[320px] lg:h-[420px]"
+            className="relative z-10 h-[260px] w-full max-w-[820px] rounded-[2rem] border border-white/10 object-cover shadow-2xl sm:h-[320px] lg:h-[420px]"
           />
         </div>
       </div>
