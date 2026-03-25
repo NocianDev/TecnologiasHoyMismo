@@ -19,25 +19,26 @@ export default function Navbar() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/75 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-10">
         <Link to="/" className="flex items-center gap-4" onClick={closeMenu}>
-          <img
-            src="/images/Logo.png"
-            alt="Hoy Mismo Tecnología"
-            className="h-16 w-auto object-contain sm:h-20 md:h-24"
-          />
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-2xl"></div>
+            <img
+              src="/images/Logo.png"
+              alt="Hoy Mismo Tecnología"
+              className="relative h-16 w-auto object-contain drop-shadow-[0_0_20px_rgba(250,204,21,0.22)] sm:h-20 md:h-24 lg:h-28"
+            />
+          </div>
 
-          <div className="hidden sm:block">
-            <p className="text-base font-semibold tracking-wide text-yellow-400 md:text-lg">
+          <div className="block">
+            <p className="text-xl font-extrabold tracking-wide text-yellow-400 drop-shadow-[0_0_16px_rgba(250,204,21,0.28)] sm:text-3xl md:text-4xl">
               HOY MISMO TECNOLOGÍA
-            </p>
-            <p className="text-xs text-white/60 md:text-sm">
-              Web, IA, APIs y automatización
             </p>
           </div>
         </Link>
 
+        {/* Desktop */}
         <nav className="hidden items-center gap-6 text-[17px] font-medium md:flex">
           <NavLink to="/" className={navLinkClass}>
             Inicio
@@ -59,26 +60,27 @@ export default function Navbar() {
           </NavLink>
         </nav>
 
+        {/* Botón hamburguesa */}
         <button
           type="button"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-yellow-400/30 hover:text-yellow-300 md:hidden"
+          className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition hover:border-yellow-400/30 hover:text-yellow-300 md:hidden"
         >
-          <span className="relative block h-5 w-5">
+          <span className="relative block h-5 w-6">
             <span
-              className={`absolute left-0 top-0 block h-0.5 w-5 bg-current transition-all duration-300 ${
+              className={`absolute left-0 top-0 block h-0.5 w-6 bg-current transition-all duration-300 ${
                 open ? "top-2 rotate-45" : ""
               }`}
             />
             <span
-              className={`absolute left-0 top-2 block h-0.5 w-5 bg-current transition-all duration-300 ${
+              className={`absolute left-0 top-2 block h-0.5 w-6 bg-current transition-all duration-300 ${
                 open ? "opacity-0" : "opacity-100"
               }`}
             />
             <span
-              className={`absolute left-0 top-4 block h-0.5 w-5 bg-current transition-all duration-300 ${
+              className={`absolute left-0 top-4 block h-0.5 w-6 bg-current transition-all duration-300 ${
                 open ? "top-2 -rotate-45" : ""
               }`}
             />
@@ -86,6 +88,7 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Menú móvil */}
       <div
         className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
           open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
