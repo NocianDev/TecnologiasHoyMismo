@@ -7,8 +7,8 @@ export default function Servicios() {
     <main>
       <PageHero
         badge="Servicios y Plataformas"
-        title="Sistemas web, dashboards y soluciones listas para operar"
-        description="Desarrollamos plataformas, paneles administrativos, sistemas internos y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real para empresas."
+        title="Diseño de paginas web,GPS para vehiculos y camiones,Campañas de redes sociales"
+        description="Desarrollamos plataformas y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real, servicios de GPS de gran precicionn y campañas con enfoque en redes sociales para empresas."
         image="/images/System.png"
         imageAlt="Plataformas, dashboards y sistemas empresariales"
       />

@@ -70,7 +70,7 @@ export default function Home() {
             <div className="absolute inset-[8%] rounded-full border border-yellow-400/10"></div>
 
             <img
-  src="/images/Hero3.png"
+  src="/images/Hero5.png"
   alt="Tecnología y automatización"
    className="relative z-10 w-full max-h-[520px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
 />

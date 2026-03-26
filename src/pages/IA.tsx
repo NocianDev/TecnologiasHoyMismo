@@ -7,8 +7,8 @@ export default function IA() {
     <main>
       <PageHero
         badge="Inteligencia Artificial"
-        title="IA aplicada a decisiones, automatización y análisis avanzado"
-        description="Construimos soluciones con inteligencia artificial para observabilidad, evaluación ética, motores cognitivos, automatización empresarial y sistemas multi-modelo orientados a resultados reales."
+        title="IA con funcion de call center o recepcionista"
+        description="Construimos inteligencias artificiales que brindan la capacidad de atender llamadas 24/7 y dar soluciones precisas"
         image="/images/AI.png"
         imageAlt="Inteligencia artificial, redes neuronales y sistemas cognitivos"
       />

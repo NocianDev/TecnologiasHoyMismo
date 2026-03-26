@@ -7,8 +7,8 @@ export default function Chatbots() {
     <main>
       <PageHero
         badge="Chatbots y Voz IA"
-        title="Asistentes conversacionales, voz inteligente y atención 24/7"
-        description="Creamos chatbots, asistentes de voz y sistemas multi-agente que automatizan soporte, ventas, seguimiento y atención al cliente con integración a canales reales y lógica avanzada."
+        title="Chatbots con enfoque empresarial y Dashboards"
+        description="Creamos chatbots, asistentes de voz y sistemas multi-agente que automatizan soporte, ventas y seguimiento ademas de dashboards para monitoreo y control de operaciones, diseñados para mejorar la eficiencia, experiencia del cliente y resultados comerciales reales."
         image="/images/Chatbot.png"
         imageAlt="Chatbots, agentes conversacionales y voz inteligente"
       />

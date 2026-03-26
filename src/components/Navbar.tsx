@@ -32,35 +32,21 @@ export default function Navbar() {
           </div>
 
           <div className="block">
-            <p className="text-xl font-extrabold tracking-wide text-yellow-400 drop-shadow-[0_0_16px_rgba(250,204,21,0.28)] sm:text-3xl md:text-4xl">
+            <p className="brand-title text-xl font-extrabold tracking-wide sm:text-3xl md:text-4xl">
               HOY MISMO TECNOLOGÍA
             </p>
           </div>
         </Link>
 
-        {/* Desktop */}
         <nav className="hidden items-center gap-6 text-[17px] font-medium md:flex">
-          <NavLink to="/" className={navLinkClass}>
-            Inicio
-          </NavLink>
-          <NavLink to="/servicios" className={navLinkClass}>
-            Servicios
-          </NavLink>
-          <NavLink to="/ia" className={navLinkClass}>
-            IA
-          </NavLink>
-          <NavLink to="/apis" className={navLinkClass}>
-            APIs
-          </NavLink>
-          <NavLink to="/chatbots" className={navLinkClass}>
-            Chatbots
-          </NavLink>
-          <NavLink to="/contacto" className={navLinkClass}>
-            Contacto
-          </NavLink>
+          <NavLink to="/" className={navLinkClass}>Inicio</NavLink>
+          <NavLink to="/servicios" className={navLinkClass}>Servicios</NavLink>
+          <NavLink to="/ia" className={navLinkClass}>IA</NavLink>
+          <NavLink to="/apis" className={navLinkClass}>APIs</NavLink>
+          <NavLink to="/chatbots" className={navLinkClass}>Chatbots</NavLink>
+          <NavLink to="/contacto" className={navLinkClass}>Contacto</NavLink>
         </nav>
 
-        {/* Botón hamburguesa */}
         <button
           type="button"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
@@ -88,7 +74,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Menú móvil */}
       <div
         className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
           open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
@@ -96,24 +81,12 @@ export default function Navbar() {
       >
         <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
           <div className="flex flex-col gap-2">
-            <NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>
-              Inicio
-            </NavLink>
-            <NavLink to="/servicios" className={mobileNavLinkClass} onClick={closeMenu}>
-              Servicios
-            </NavLink>
-            <NavLink to="/ia" className={mobileNavLinkClass} onClick={closeMenu}>
-              IA
-            </NavLink>
-            <NavLink to="/apis" className={mobileNavLinkClass} onClick={closeMenu}>
-              APIs
-            </NavLink>
-            <NavLink to="/chatbots" className={mobileNavLinkClass} onClick={closeMenu}>
-              Chatbots
-            </NavLink>
-            <NavLink to="/contacto" className={mobileNavLinkClass} onClick={closeMenu}>
-              Contacto
-            </NavLink>
+            <NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>Inicio</NavLink>
+            <NavLink to="/servicios" className={mobileNavLinkClass} onClick={closeMenu}>Servicios</NavLink>
+            <NavLink to="/ia" className={mobileNavLinkClass} onClick={closeMenu}>IA</NavLink>
+            <NavLink to="/apis" className={mobileNavLinkClass} onClick={closeMenu}>APIs</NavLink>
+            <NavLink to="/chatbots" className={mobileNavLinkClass} onClick={closeMenu}>Chatbots</NavLink>
+            <NavLink to="/contacto" className={mobileNavLinkClass} onClick={closeMenu}>Contacto</NavLink>
           </div>
         </nav>
       </div>

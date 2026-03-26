@@ -7,8 +7,8 @@ export default function APIs() {
     <main>
       <PageHero
         badge="APIs e Integraciones"
-        title="Backend, servicios cloud e integración entre sistemas"
-        description="Diseñamos APIs empresariales, conectores, flujos en tiempo real y arquitecturas modernas para integrar plataformas, automatizar operaciones y centralizar información crítica."
+        title="APIS y aplicaciones "
+        description="Diseñamos APIs y aplicaciones empresariales, conectores, flujos en tiempo real y arquitecturas modernas para integrar plataformas, automatizar operaciones y centralizar información crítica."
         image="/images/API.png"
         imageAlt="Integraciones, backend y arquitectura de APIs"
       />
