@@ -9,7 +9,7 @@ export default function Home() {
           <div className="flex min-h-[720px] flex-col justify-center">
             <h1 className="mt-2 text-5xl font-extrabold leading-[0.95] md:text-7xl">
               <span className="title-gradient">
-                Tecnología que vende, automatiza y escala
+                Tecnología que vende, automatiza y escala.
               </span>
             </h1>
 
@@ -70,7 +70,7 @@ export default function Home() {
             <div className="absolute inset-[8%] rounded-full border border-yellow-400/10"></div>
 
             <img
-  src="/images/Hero5.png"
+  src="/images/Hero7.png"
   alt="Tecnología y automatización"
    className="relative z-10 w-full max-h-[520px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
 />
