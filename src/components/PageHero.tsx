@@ -1,6 +1,8 @@
+import type { ReactNode } from "react";
+
 type PageHeroProps = {
   badge: string;
-  title: string;
+  title: ReactNode;
   description: string;
   image: string;
   imageAlt?: string;
