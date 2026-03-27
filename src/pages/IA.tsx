@@ -7,12 +7,12 @@ export default function IA() {
   return (
     <main>
       <PageHero
-        badge="Inteligencia Artificial"
-        title="IA con funcion de call center o recepcionista"
-        description="Construimos inteligencias artificiales que brindan la capacidad de atender llamadas 24/7 y dar soluciones precisas"
-        image="/images/AI.png"
-        imageAlt="Inteligencia artificial aplicada a negocios"
-      />
+  badge="Inteligencia Artificial"
+  title="IA con función de call center o recepcionista"
+  description="Construimos inteligencias artificiales que brindan la capacidad de atender llamadas 24/7 y dar soluciones precisas"
+  image="https://www.youtube.com/watch?v=6EqjG1kKTBA"
+  imageAlt="Inteligencia artificial aplicada a negocios"
+/>
 
       <section className="section pt-6">
         <div className="mt-6 space-y-8">

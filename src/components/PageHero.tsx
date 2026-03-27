@@ -3,7 +3,7 @@ type PageHeroProps = {
   title: string;
   description: string;
   image: string;
-  imageAlt: string;
+  imageAlt?: string;
 };
 
 export default function PageHero({
@@ -13,29 +13,59 @@ export default function PageHero({
   image,
   imageAlt,
 }: PageHeroProps) {
+  const isYoutube =
+    image.includes("youtube.com") || image.includes("youtu.be");
+
+  const getYoutubeEmbed = (url: string) => {
+    const id = url.includes("youtu.be/")
+      ? url.split("youtu.be/")[1]
+      : url.split("v=")[1]?.split("&")[0];
+
+    return `https://www.youtube.com/embed/${id}?controls=1`;
+  };
+
   return (
-    <section className="section pt-8 md:pt-10">
-      <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12">
-        <div className="max-w-3xl">
-          <span className="badge">{badge}</span>
+    <section className="section pt-12">
+      <div className="grid items-center gap-10 md:grid-cols-2">
+        
+        {/* TEXTO */}
+        <div>
+          <span className="mb-4 inline-block rounded-full bg-yellow-400/10 px-4 py-1 text-sm font-semibold text-yellow-400">
+            {badge}
+          </span>
 
-          <h1 className="mt-4 text-4xl font-bold leading-tight title-gradient sm:text-5xl md:text-6xl">
-            {title}
-          </h1>
+          <h1 className="text-4xl font-bold leading-tight text-yellow-400 sm:text-5xl lg:text-6xl">
+  {title}
+</h1>
 
-          <p className="mt-5 max-w-2xl text-base leading-8 text-white/75 sm:text-lg">
+          <p className="text-white/80 text-lg">
             {description}
           </p>
         </div>
 
-        <div className="relative flex justify-center lg:justify-end">
-          <div className="absolute inset-0 rounded-[2rem] bg-yellow-400/10 blur-3xl"></div>
+        {/* MEDIA */}
+        <div className="relative h-[300px] w-full overflow-hidden rounded-2xl md:h-[400px]">
+          
+          {isYoutube ? (
+            <div className="relative h-full w-full">
+              <iframe
+                src={getYoutubeEmbed(image)}
+                className="h-full w-full rounded-2xl"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
 
-          <img
-            src={image}
-            alt={imageAlt}
-            className="relative z-10 h-[260px] w-full max-w-[820px] rounded-[2rem] border border-white/10 object-cover shadow-2xl sm:h-[320px] lg:h-[420px]"
-          />
+              {/* overlay pro */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/30" />
+            </div>
+          ) : (
+            <img
+              src={image}
+              alt={imageAlt}
+              className="h-full w-full object-cover rounded-2xl"
+            />
+          )}
+
         </div>
       </div>
     </section>

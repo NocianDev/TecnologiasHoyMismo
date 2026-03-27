@@ -8,8 +8,27 @@ export default function Servicios() {
     <main>
       <PageHero
         badge="Servicios y Plataformas"
-        title="Diseño de paginas web,GPS para vehiculos y camiones,Campañas de redes sociales"
-        description="Desarrollamos plataformas y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real, servicios de GPS de gran precicionn y campañas con enfoque en redes sociales para empresas."
+        title={
+  <div className="space-y-3 text-2xl sm:text-3xl lg:text-5xl">
+    
+    <div className="flex items-start gap-3">
+      <span className="mt-2 text-white">•</span>
+      <span>Diseño de páginas web</span>
+    </div>
+
+    <div className="flex items-start gap-3">
+      <span className="mt-2 text-white">•</span>
+      <span>GPS para cargamentos</span>
+    </div>
+
+    <div className="flex items-start gap-3">
+      <span className="mt-2 text-white">•</span>
+      <span>Campañas digitales</span>
+    </div>
+
+  </div>
+}
+        description="Desarrollamos plataformas y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real, además de servicios de GPS de gran precisión y campañas con enfoque en redes sociales para empresas."
         image="/images/System.png"
         imageAlt="Servicios y plataformas empresariales"
       />

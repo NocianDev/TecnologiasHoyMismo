@@ -10,7 +10,7 @@ export default function APIs() {
         badge="APIs e Integraciones"
         title="APIs y Aplicaciones Empresariales"
         description="Diseñamos APIs y aplicaciones empresariales, conectores, flujos en tiempo real y arquitecturas modernas para integrar plataformas, automatizar operaciones y centralizar información crítica."
-        image="/images/API.png"
+        image="https://www.youtube.com/watch?v=LGm9tyBb1iM&t=4s"
         imageAlt="APIs e integraciones empresariales"
       />
 
