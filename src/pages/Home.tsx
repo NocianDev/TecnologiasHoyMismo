@@ -65,16 +65,58 @@ export default function Home() {
           </div>
 
           <div className="relative w-full">
-  <div className="absolute left-[5%] top-[10%] h-56 w-56 rounded-full bg-yellow-400/10 blur-3xl"></div>
-  <div className="absolute bottom-[10%] right-[5%] h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
-  <div className="absolute inset-[8%] rounded-full border border-yellow-400/10"></div>
+            <div className="absolute left-[5%] top-[10%] h-56 w-56 rounded-full bg-yellow-400/10 blur-3xl"></div>
+            <div className="absolute bottom-[10%] right-[5%] h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+            <div className="absolute inset-[8%] rounded-full border border-yellow-400/10"></div>
 
+            <div className="relative z-10 mx-auto w-full max-w-[760px] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl aspect-[4/3] xl:max-w-[820px]">
   <img
-  src="/images/Hero7.png"
-  alt="Tecnología y automatización"
-  className="relative z-10 w-full h-full max-h-[730px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
-/>
+    src="/images/Hero7.png"
+    alt="Tecnología y automatización"
+    className="h-full w-full object-cover"
+  />
+<div className="absolute inset-0">
+                {/* Web empresariales */}
+<div className="group absolute left-[38%] top-[5%] w-[26%] h-[25%] cursor-pointer">
+
+  {/* Glow (invisible → visible) */}
+  <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
+  group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
 </div>
+
+  <div className="group absolute left-[14%] top-[40%] w-[22%] h-[22%] cursor-pointer">
+
+  {/* Glow (invisible → visible) */}
+  <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
+  group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
+</div>
+
+                {/* CRM */}
+                <div className="group absolute left-[67%] top-[40%] w-[24%] h-[22%] cursor-pointer">
+
+  {/* Glow (invisible → visible) */}
+  <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
+  group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
+</div>
+
+                {/* IA */}
+                <div className="group absolute left-[25%] top-[76%] w-[24%] h-[23%] cursor-pointer">
+
+  {/* Glow (invisible → visible) */}
+  <div className="absolute inset-0 transition-all duration-300  group-hover:bg-yellow-300/10
+  group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
+</div>
+
+                {/* Chatbots */}
+                <div className="group absolute left-[55%] top-[76%] w-[21%] h-[23%] cursor-pointer">
+
+  {/* Glow (invisible → visible) */}
+  <div className="absolute inset-0 duration-300  group-hover:bg-yellow-300/10
+  group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
+</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -117,83 +159,81 @@ export default function Home() {
       </section>
 
       {/* SERVICIOS DESTACADOS */}
-<section className="section">
-  <div className="mx-auto max-w-3xl text-center">
-    <h2 className="mt-5 text-4xl font-bold title-gradient">
-      Todo lo que una empresa moderna necesita para digitalizarse
-    </h2>
-    <p className="subtitle mx-auto">
-      Combinamos diseño, tecnología y automatización para construir soluciones completas,
-      funcionales y listas para operar.
-    </p>
-  </div>
+      <section className="section">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="mt-5 text-4xl font-bold title-gradient">
+            Todo lo que una empresa moderna necesita para digitalizarse
+          </h2>
+          <p className="subtitle mx-auto">
+            Combinamos diseño, tecnología y automatización para construir soluciones completas,
+            funcionales y listas para operar.
+          </p>
+        </div>
 
-  <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {/* WEB (imagen) */}
+          <div className="card">
+            <img
+              src="/images/Web.png"
+              alt="Páginas web"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
+            <h3 className="text-xl font-bold text-yellow-400">Páginas web profesionales</h3>
+            <p className="mt-3 text-white/75">
+              Sitios modernos, responsivos y optimizados para mostrar tus servicios,
+              generar confianza y convertir visitantes en clientes.
+            </p>
+          </div>
 
-    {/* WEB (imagen) */}
-    <div className="card">
-      <img
-        src="/images/Web.png"
-        alt="Páginas web"
-        className="mb-6 h-32 w-full rounded-2xl object-cover"
-      />
-      <h3 className="text-xl font-bold text-yellow-400">Páginas web profesionales</h3>
-      <p className="mt-3 text-white/75">
-        Sitios modernos, responsivos y optimizados para mostrar tus servicios,
-        generar confianza y convertir visitantes en clientes.
-      </p>
-    </div>
+          {/* IA (video) */}
+          <div className="card">
+            <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
+              <iframe
+                src="https://www.youtube.com/embed/6EqjG1kKTBA"
+                className="h-full w-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </div>
+            <h3 className="text-xl font-bold text-yellow-400">Automatización con IA</h3>
+            <p className="mt-3 text-white/75">
+              Implementamos herramientas inteligentes que responden, clasifican,
+              asisten y agilizan procesos sin depender siempre de intervención manual.
+            </p>
+          </div>
 
-    {/* IA (video) */}
-    <div className="card">
-      <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
-        <iframe
-          src="https://www.youtube.com/embed/6EqjG1kKTBA"
-          className="h-full w-full"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-      </div>
-      <h3 className="text-xl font-bold text-yellow-400">Automatización con IA</h3>
-      <p className="mt-3 text-white/75">
-        Implementamos herramientas inteligentes que responden, clasifican,
-        asisten y agilizan procesos sin depender siempre de intervención manual.
-      </p>
-    </div>
+          {/* APIs (video) */}
+          <div className="card">
+            <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
+              <iframe
+                src="https://www.youtube.com/embed/LGm9tyBb1iM?start=4"
+                className="h-full w-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            </div>
+            <h3 className="text-xl font-bold text-yellow-400">APIs e integraciones</h3>
+            <p className="mt-3 text-white/75">
+              Conectamos sistemas, plataformas, formularios, CRM, bases de datos
+              y servicios externos para crear flujos más inteligentes.
+            </p>
+          </div>
 
-    {/* APIs (video) */}
-    <div className="card">
-      <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
-        <iframe
-          src="https://www.youtube.com/embed/LGm9tyBb1iM?t=4s"
-          className="h-full w-full"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-      </div>
-      <h3 className="text-xl font-bold text-yellow-400">APIs e integraciones</h3>
-      <p className="mt-3 text-white/75">
-        Conectamos sistemas, plataformas, formularios, CRM, bases de datos
-        y servicios externos para crear flujos más inteligentes.
-      </p>
-    </div>
-
-    {/* CHATBOT (imagen) */}
-    <div className="card">
-      <img
-        src="/images/Chatbot.png"
-        alt="Chatbots"
-        className="mb-6 h-32 w-full rounded-2xl object-cover"
-      />
-      <h3 className="text-xl font-bold text-yellow-400">Chatbots inteligentes</h3>
-      <p className="mt-3 text-white/75">
-        Automatiza la atención al cliente con chatbots que responden en tiempo real,
-        capturan leads y mejoran la experiencia del usuario.
-      </p>
-    </div>
-
-  </div>
-</section>
+          {/* CHATBOT (imagen) */}
+          <div className="card">
+            <img
+              src="/images/Chatbot.png"
+              alt="Chatbots"
+              className="mb-6 h-32 w-full rounded-2xl object-cover"
+            />
+            <h3 className="text-xl font-bold text-yellow-400">Chatbots inteligentes</h3>
+            <p className="mt-3 text-white/75">
+              Automatiza la atención al cliente con chatbots que responden en tiempo real,
+              capturan leads y mejoran la experiencia del usuario.
+            </p>
+          </div>
+        </div>
+      </section>
 
       {/* PROCESO */}
       <section className="section grid items-center gap-12 lg:grid-cols-2">

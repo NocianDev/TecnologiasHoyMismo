@@ -1,5 +1,5 @@
 export default function WhatsAppButton() {
-  const phone = "528100000000"; // cambia por tu número real
+  const phone = "528121602495"; // cambia por tu número real
   const message = encodeURIComponent(
     "Hola, me interesa recibir información sobre sus servicios."
   );

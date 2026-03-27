@@ -68,7 +68,7 @@ export default function Contacto() {
                     Atención directa para cotizaciones y dudas.
                   </p>
                   <p className="mt-5 break-words text-2xl font-semibold text-white">
-                    +52 81 0000 0000
+                    +52 81 2160 2495
                   </p>
                 </div>
               </Reveal>
