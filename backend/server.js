@@ -80,6 +80,6 @@ cancel_url: "https://hoymismotecnología.com/cancel",
   }
 });
 
-app.listen(4242, () => {
-  console.log("Servidor corriendo en http://localhost:4242");
+app.listen(process.env.PORT || 4242, () => {
+  console.log("Servidor corriendo");
 });
