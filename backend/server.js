@@ -78,3 +78,5 @@ app.post("/create-checkout-session", async (req, res) => {
 app.listen(process.env.PORT || 4242, () => {
   console.log("Servidor corriendo en puerto", process.env.PORT || 4242);
 });
+
+console.log("Precio enviado:", selectedPlan.price);
