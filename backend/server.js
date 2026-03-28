@@ -8,7 +8,7 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 app.use(
   cors({
-    origin: "https://hoymismotecnología.com",
+    origin: process.env.FRONTEND_URL,
   })
 );
 
@@ -65,8 +65,8 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: "https://hoymismotecnología.com/success?session_id={CHECKOUT_SESSION_ID}",
-cancel_url: "https://hoymismotecnología.com/cancel",
+      success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
     });
 
     res.json({
