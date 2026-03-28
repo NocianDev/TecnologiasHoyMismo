@@ -5,26 +5,39 @@ export default function Contacto() {
   plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
 ) {
   try {
+    console.log("CLICK en plan:", plan);
+    console.log("API URL:", import.meta.env.VITE_API_URL);
+
     const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ plan }),
     });
 
-    const data = await res.json();
-
     console.log("STATUS:", res.status);
-    console.log("RESPONSE:", data);
+
+    const text = await res.text();
+    console.log("RAW RESPONSE:", text);
+
+    let data = {};
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      console.error("La respuesta no es JSON válido");
+    }
+
+    console.log("DATA PARSEADA:", data);
 
     if (!res.ok) {
-      alert(data.error || "Falló el backend");
+      alert((data as any).error || "Falló el backend");
       return;
     }
 
-    if (data.url) {
-      window.location.href = data.url;
+    if ((data as any).url) {
+      console.log("Redirigiendo a:", (data as any).url);
+      window.location.href = (data as any).url;
     } else {
-      alert("No se pudo iniciar el pago.");
+      alert("No llegó la URL de Stripe");
     }
   } catch (error) {
     console.error("Error al iniciar compra:", error);
