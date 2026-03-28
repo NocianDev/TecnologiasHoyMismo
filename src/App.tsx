@@ -8,6 +8,8 @@ import IA from "./pages/IA";
 import APIs from "./pages/APIs";
 import Chatbots from "./pages/Chatbots";
 import Contacto from "./pages/Contacto";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/apis" element={<APIs />} />
         <Route path="/chatbots" element={<Chatbots />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/cancel" element={<Cancel />} />
       </Routes>
 
       <WhatsAppButton />

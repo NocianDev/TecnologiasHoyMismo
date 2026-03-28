@@ -1,13 +1,15 @@
 import Reveal from "../components/Reveal";
 
 export default function Contacto() {
-  async function handleBuy(plan: "landing" | "chatbot" | "api") {
+  async function handleBuy(
+    plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
+  ) {
     try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
+      const res = await fetch("https://api.hoymismotecnología.com/create-checkout-session", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ plan }),
+});
 
       const data = await res.json();
 
@@ -111,7 +113,7 @@ export default function Contacto() {
                 <div className="mt-6 space-y-5 text-white/75">
                   <div>
                     <h3 className="font-semibold text-white">
-                      Páginas web,GPS y campañas de marketing digital
+                      Páginas web, GPS y campañas de marketing digital
                     </h3>
                     <p className="mt-1">
                       Sitios profesionales, corporativos y páginas orientadas a conversión.
@@ -164,7 +166,7 @@ export default function Contacto() {
                       Página profesional para negocio o servicio.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $4,999 MXN
+                      $1 MXN
                     </p>
                     <button
                       onClick={() => handleBuy("landing")}
@@ -180,10 +182,10 @@ export default function Contacto() {
                       GPS para rastreo de cargamento.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $8,999 MXN
+                      $1 MXN
                     </p>
                     <button
-                      onClick={() => handleBuy("chatbot")}
+                      onClick={() => handleBuy("gps")}
                       className="btn-primary mt-5"
                     >
                       Comprar ahora
@@ -196,10 +198,10 @@ export default function Contacto() {
                       Campaña de marketing digital para promocionar tu producto o servicio.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $8,999 MXN
+                      $1 MXN
                     </p>
                     <button
-                      onClick={() => handleBuy("chatbot")}
+                      onClick={() => handleBuy("campana")}
                       className="btn-primary mt-5"
                     >
                       Comprar ahora
@@ -212,15 +214,15 @@ export default function Contacto() {
                       Solución de inteligencia artificial para tu negocio.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $8,999 MXN
+                      $1 MXN
                     </p>
                     <button
-                      onClick={() => handleBuy("chatbot")}
+                      onClick={() => handleBuy("ia")}
                       className="btn-primary mt-5"
                     >
                       Comprar ahora
                     </button>
-                  </div>                  
+                  </div>
 
                   <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
                     <h3 className="text-xl font-bold text-white">Chatbot Inicial</h3>
@@ -228,7 +230,7 @@ export default function Contacto() {
                       Bot de atención para sitio o proceso simple.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $8,999 MXN
+                      $1 MXN
                     </p>
                     <button
                       onClick={() => handleBuy("chatbot")}
@@ -239,12 +241,12 @@ export default function Contacto() {
                   </div>
 
                   <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">API / Aplicacion</h3>
+                    <h3 className="text-xl font-bold text-white">API / Aplicación</h3>
                     <p className="mt-2 text-white/70">
                       Integración base entre sistemas o formularios.
                     </p>
                     <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $6,999 MXN
+                      $1 MXN
                     </p>
                     <button
                       onClick={() => handleBuy("api")}
