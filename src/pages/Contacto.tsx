@@ -2,48 +2,33 @@ import Reveal from "../components/Reveal";
 
 export default function Contacto() {
   async function handleBuy(
-  plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
-) {
-  try {
-    console.log("CLICK en plan:", plan);
-    console.log("API URL:", import.meta.env.VITE_API_URL);
-
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan }),
-    });
-
-    console.log("STATUS:", res.status);
-
-    const text = await res.text();
-    console.log("RAW RESPONSE:", text);
-
-    let data = {};
+    plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
+  ) {
     try {
-      data = JSON.parse(text);
-    } catch (e) {
-      console.error("La respuesta no es JSON válido");
-    }
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ plan }),
+        }
+      );
 
-    console.log("DATA PARSEADA:", data);
+      const data = await res.json();
 
-    if (!res.ok) {
-      alert((data as any).error || "Falló el backend");
-      return;
-    }
+      if (!res.ok) {
+        alert(data.error || "Error al iniciar compra");
+        return;
+      }
 
-    if ((data as any).url) {
-      console.log("Redirigiendo a:", (data as any).url);
-      window.location.href = (data as any).url;
-    } else {
-      alert("No llegó la URL de Stripe");
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al iniciar compra");
     }
-  } catch (error) {
-    console.error("Error al iniciar compra:", error);
-    alert("Ocurrió un error al iniciar la compra.");
   }
-}
 
   return (
     <main className="w-full max-w-full overflow-x-hidden">
@@ -69,7 +54,7 @@ export default function Contacto() {
 
       <section className="section pt-8">
         <div className="grid w-full max-w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          <div className="min-w-0">
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
             <Reveal>
               <h2 className="text-3xl font-bold title-gradient sm:text-4xl">
                 Información de contacto
@@ -181,102 +166,76 @@ export default function Contacto() {
                   Puedes adquirir una solución inicial y continuar con personalización después.
                 </p>
 
-                <div className="mt-6 grid gap-4">
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">Landing Page</h3>
-                    <p className="mt-2 text-white/70">
-                      Página profesional para negocio o servicio.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("landing")}
-                      className="btn-primary mt-5"
+                <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                  {[
+                    {
+                      title: "Landing Page",
+                      description: "Página profesional para negocio o servicio.",
+                      price: "$10 MXN",
+                      plan: "landing",
+                    },
+                    {
+                      title: "GPS",
+                      description: "GPS para rastreo de cargamento.",
+                      price: "$10 MXN",
+                      plan: "gps",
+                    },
+                    {
+                      title: "Campaña digital",
+                      description:
+                        "Campaña de marketing digital para promocionar tu producto o servicio.",
+                      price: "$10 MXN",
+                      plan: "campana",
+                    },
+                    {
+                      title: "Proyecto IA",
+                      description: "Solución de inteligencia artificial para tu negocio.",
+                      price: "$10 MXN",
+                      plan: "ia",
+                    },
+                    {
+                      title: "Chatbot Inicial",
+                      description: "Bot de atención para sitio o proceso simple.",
+                      price: "$10 MXN",
+                      plan: "chatbot",
+                    },
+                    {
+                      title: "API / Aplicación",
+                      description: "Integración base entre sistemas o formularios.",
+                      price: "$10 MXN",
+                      plan: "api",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.plan}
+                      className="flex h-full flex-col justify-between rounded-2xl border border-white/10 bg-black/20 p-5"
                     >
-                      Comprar ahora
-                    </button>
-                  </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                        <p className="mt-2 text-white/70">{item.description}</p>
+                        <p className="mt-4 text-3xl font-extrabold text-yellow-400">
+                          {item.price}
+                        </p>
+                      </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">GPS</h3>
-                    <p className="mt-2 text-white/70">
-                      GPS para rastreo de cargamento.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("gps")}
-                      className="btn-primary mt-5"
-                    >
-                      Comprar ahora
-                    </button>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">Campaña digital</h3>
-                    <p className="mt-2 text-white/70">
-                      Campaña de marketing digital para promocionar tu producto o servicio.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("campana")}
-                      className="btn-primary mt-5"
-                    >
-                      Comprar ahora
-                    </button>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">Proyecto IA</h3>
-                    <p className="mt-2 text-white/70">
-                      Solución de inteligencia artificial para tu negocio.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("ia")}
-                      className="btn-primary mt-5"
-                    >
-                      Comprar ahora
-                    </button>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">Chatbot Inicial</h3>
-                    <p className="mt-2 text-white/70">
-                      Bot de atención para sitio o proceso simple.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("chatbot")}
-                      className="btn-primary mt-5"
-                    >
-                      Comprar ahora
-                    </button>
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                    <h3 className="text-xl font-bold text-white">API / Aplicación</h3>
-                    <p className="mt-2 text-white/70">
-                      Integración base entre sistemas o formularios.
-                    </p>
-                    <p className="mt-4 text-3xl font-extrabold text-yellow-400">
-                      $1 MXN
-                    </p>
-                    <button
-                      onClick={() => handleBuy("api")}
-                      className="btn-primary mt-5"
-                    >
-                      Comprar ahora
-                    </button>
-                  </div>
+                      <button
+                        onClick={() =>
+                          handleBuy(
+                            item.plan as
+                              | "landing"
+                              | "gps"
+                              | "campana"
+                              | "ia"
+                              | "chatbot"
+                              | "api"
+                          )
+                        }
+                        className="btn-primary mt-5 w-full"
+                      >
+                        Comprar ahora
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
             </Reveal>
