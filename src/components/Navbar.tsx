@@ -26,7 +26,7 @@ export default function Navbar() {
           style={{ backgroundImage: "url('/images/Hexagonos2.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-yellow-400/35 to-black/80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" /> */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.25),transparent_60%)] blur-2xl" />
       </div>
 
@@ -39,7 +39,7 @@ export default function Navbar() {
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-yellow-400/30 blur-xl" />
             <img
-              src="/images/Logo3.png"
+              src="/images/Logo4.png"
               alt="Hoy Mismo Tecnología"
               className="relative h-14 w-auto object-contain drop-shadow-[0_0_20px_rgba(250,204,21,0.3)] sm:h-16 md:h-20 lg:h-24"
             />

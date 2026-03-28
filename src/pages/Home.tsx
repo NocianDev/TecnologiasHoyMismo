@@ -71,20 +71,20 @@ export default function Home() {
 
             <div className="relative z-10 mx-auto w-full max-w-[760px] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl aspect-[4/3] xl:max-w-[820px]">
   <img
-    src="/images/Hero7.png"
+    src="/images/Hero8.png"
     alt="Tecnología y automatización"
     className="h-full w-full object-cover"
   />
 <div className="absolute inset-0">
                 {/* Web empresariales */}
-<div className="group absolute left-[38%] top-[5%] w-[26%] h-[25%] cursor-pointer">
+<div className="group absolute left-[38%] top-[9%] w-[26%] h-[25%] cursor-pointer">
 
   {/* Glow (invisible → visible) */}
   <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
   group-hover:shadow-[0_0_60px_rgba(250,204,21,1),0_0_120px_rgba(250,204,21,0.8),0_0_180px_rgba(250,204,21,0.6)]" />
 </div>
 
-  <div className="group absolute left-[14%] top-[40%] w-[22%] h-[22%] cursor-pointer">
+  <div className="group absolute left-[14%] top-[45%] w-[22%] h-[22%] cursor-pointer">
 
   {/* Glow (invisible → visible) */}
   <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
@@ -92,7 +92,7 @@ export default function Home() {
 </div>
 
                 {/* CRM */}
-                <div className="group absolute left-[67%] top-[40%] w-[24%] h-[22%] cursor-pointer">
+                <div className="group absolute left-[67%] top-[45%] w-[24%] h-[22%] cursor-pointer">
 
   {/* Glow (invisible → visible) */}
   <div className="absolute inset-0  transition-all duration-300  group-hover:bg-yellow-300/10
@@ -100,7 +100,7 @@ export default function Home() {
 </div>
 
                 {/* IA */}
-                <div className="group absolute left-[25%] top-[76%] w-[24%] h-[23%] cursor-pointer">
+                <div className="group absolute left-[25%] top-[78%] w-[24%] h-[23%] cursor-pointer">
 
   {/* Glow (invisible → visible) */}
   <div className="absolute inset-0 transition-all duration-300  group-hover:bg-yellow-300/10
@@ -108,7 +108,7 @@ export default function Home() {
 </div>
 
                 {/* Chatbots */}
-                <div className="group absolute left-[55%] top-[76%] w-[21%] h-[23%] cursor-pointer">
+                <div className="group absolute left-[55%] top-[78%] w-[21%] h-[23%] cursor-pointer">
 
   {/* Glow (invisible → visible) */}
   <div className="absolute inset-0 duration-300  group-hover:bg-yellow-300/10
@@ -236,61 +236,75 @@ export default function Home() {
       </section>
 
       {/* PROCESO */}
-      <section className="section grid items-center gap-12 lg:grid-cols-2">
-        <div className="relative flex justify-center">
-          <div className="absolute h-[380px] w-[380px] rounded-full bg-yellow-400/15 blur-3xl"></div>
+      <section className="section">
+  <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
+    <div className="grid items-center gap-6 lg:grid-cols-[0.95fr_1.05fr] xl:gap-8">
+      
+      {/* IMAGEN */}
+      <div className="flex justify-center lg:justify-start">
+        <div className="w-full max-w-[500px] overflow-hidden rounded-[2rem] xl:max-w-[540px]">
           <img
-            src="/images/System.png"
+            src="/images/Proceso.png"
             alt="Proceso de trabajo"
-            className="relative z-10 w-full max-w-[640px] rounded-[2rem] border border-white/10 object-cover shadow-2xl"
+            className="w-full h-auto rounded-[2rem] border border-white/10 object-cover shadow-2xl"
           />
         </div>
+      </div>
 
-        <div>
-          <span className="badge">Cómo trabajamos</span>
-          <h2 className="mt-5 text-4xl font-bold title-gradient">
-            Un proceso claro, profesional y orientado a resultados
-          </h2>
-          <ul className="info-list mt-8 space-y-5">
-            <li>
-              <span>◆</span>
-              <div>
-                <strong className="text-white">1. Análisis y propuesta</strong>
-                <p className="mt-1 text-white/70">
-                  Revisamos tus objetivos, tu giro y lo que realmente necesitas para plantear una solución útil.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>◆</span>
-              <div>
-                <strong className="text-white">2. Diseño visual y estructura</strong>
-                <p className="mt-1 text-white/70">
-                  Organizamos la información, diseñamos la experiencia y definimos el estilo ideal para tu marca.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>◆</span>
-              <div>
-                <strong className="text-white">3. Desarrollo e integración</strong>
-                <p className="mt-1 text-white/70">
-                  Programamos el proyecto, añadimos automatizaciones, formularios, APIs o módulos especiales.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span>◆</span>
-              <div>
-                <strong className="text-white">4. Pruebas, lanzamiento y mejora</strong>
-                <p className="mt-1 text-white/70">
-                  Verificamos rendimiento, corregimos detalles y dejamos una base lista para escalar.
-                </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* TEXTO */}
+      <div className="w-full max-w-[680px]">
+        <span className="badge">Cómo trabajamos</span>
+
+        <h2 className="mt-5 text-4xl font-bold title-gradient">
+          Un proceso claro, profesional y orientado a resultados
+        </h2>
+
+        <ul className="info-list mt-8 space-y-5">
+          <li>
+            <span>◆</span>
+            <div>
+              <strong className="text-white">1. Análisis y propuesta</strong>
+              <p className="mt-1 text-white/70">
+                Revisamos tus objetivos, tu giro y lo que realmente necesitas para plantear una solución útil.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <span>◆</span>
+            <div>
+              <strong className="text-white">2. Diseño visual y estructura</strong>
+              <p className="mt-1 text-white/70">
+                Organizamos la información, diseñamos la experiencia y definimos el estilo ideal para tu marca.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <span>◆</span>
+            <div>
+              <strong className="text-white">3. Desarrollo e integración</strong>
+              <p className="mt-1 text-white/70">
+                Programamos el proyecto, añadimos automatizaciones, formularios, APIs o módulos especiales.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <span>◆</span>
+            <div>
+              <strong className="text-white">4. Pruebas, lanzamiento y mejora</strong>
+              <p className="mt-1 text-white/70">
+                Verificamos rendimiento, corregimos detalles y dejamos una base lista para escalar.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/* BENEFICIOS */}
       <section className="section">

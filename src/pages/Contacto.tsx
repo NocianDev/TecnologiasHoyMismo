@@ -26,7 +26,7 @@ export default function Contacto() {
       <section className="section pt-8">
         <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10">
           <img
-            src="/images/Contacto2.jpg"
+            src="/images/Contacto3.png"
             alt="Contacto"
             className="block h-[200px] w-full object-cover sm:h-[260px] md:h-[320px]"
           />
