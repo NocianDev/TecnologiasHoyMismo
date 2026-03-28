@@ -2,26 +2,35 @@ import Reveal from "../components/Reveal";
 
 export default function Contacto() {
   async function handleBuy(
-    plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
-  ) {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ plan }),
-});
+  plan: "landing" | "gps" | "campana" | "ia" | "chatbot" | "api"
+) {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plan }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("No se pudo iniciar el pago.");
-      }
-    } catch {
-      alert("Ocurrió un error al iniciar la compra.");
+    console.log("STATUS:", res.status);
+    console.log("RESPONSE:", data);
+
+    if (!res.ok) {
+      alert(data.error || "Falló el backend");
+      return;
     }
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("No se pudo iniciar el pago.");
+    }
+  } catch (error) {
+    console.error("Error al iniciar compra:", error);
+    alert("Ocurrió un error al iniciar la compra.");
   }
+}
 
   return (
     <main className="w-full max-w-full overflow-x-hidden">

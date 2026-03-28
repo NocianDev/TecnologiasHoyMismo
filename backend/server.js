@@ -6,50 +6,45 @@ require("dotenv").config();
 const app = express();
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-  })
-);
+// TEMPORAL: abrir CORS para depurar
+app.use(cors());
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Backend OK");
+});
+
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
+
 app.post("/create-checkout-session", async (req, res) => {
   try {
+    console.log("Origin:", req.headers.origin);
+    console.log("Body:", req.body);
+
     const { plan } = req.body;
 
     const plans = {
-      landing: {
-        name: "Landing Page",
-        price: 1,
-      },
-      gps: {
-        name: "GPS",
-        price: 1,
-      },
-      campana: {
-        name: "Campaña digital",
-        price: 1,
-      },
-      ia: {
-        name: "Proyecto IA",
-        price: 1,
-      },
-      chatbot: {
-        name: "Chatbot Inicial",
-        price: 1,
-      },
-      api: {
-        name: "API / Aplicación",
-        price: 1,
-      },
+      landing: { name: "Landing Page", price: 100 },
+      gps: { name: "GPS", price: 100 },
+      campana: { name: "Campaña digital", price: 100 },
+      ia: { name: "Proyecto IA", price: 100 },
+      chatbot: { name: "Chatbot Inicial", price: 100 },
+      api: { name: "API / Aplicación", price: 100 },
     };
 
     const selectedPlan = plans[plan];
 
     if (!selectedPlan) {
-      return res.status(400).json({ error: "Plan no válido" });
+      return res.status(400).json({
+        error: `Plan no válido: ${plan}`,
+      });
     }
+
+    const frontendUrl =
+      process.env.FRONTEND_URL || "https://www.tecnologíahoymismo.com";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -65,15 +60,15 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+      success_url: `${frontendUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${frontendUrl}/cancel`,
     });
 
-    res.json({
-      url: session.url,
-    });
+    console.log("Checkout session creada:", session.id);
+
+    res.json({ url: session.url });
   } catch (error) {
-    console.error("Stripe error:", error);
+    console.error("Stripe error completo:", error);
     res.status(500).json({
       error: error.message || "Error interno del servidor",
     });
@@ -81,5 +76,5 @@ app.post("/create-checkout-session", async (req, res) => {
 });
 
 app.listen(process.env.PORT || 4242, () => {
-  console.log("Servidor corriendo");
+  console.log("Servidor corriendo en puerto", process.env.PORT || 4242);
 });
