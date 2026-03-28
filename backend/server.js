@@ -28,7 +28,7 @@ app.post("/create-checkout-session", async (req, res) => {
 
     const plans = {
       landing: { name: "Landing Page", price: 1000 },
-      gps: { name: "GPS", price: 1000},
+      gps: { name: "GPS", price: 1000 },
       campana: { name: "Campaña digital", price: 1000 },
       ia: { name: "Proyecto IA", price: 1000 },
       chatbot: { name: "Chatbot Inicial", price: 1000 },
@@ -43,8 +43,10 @@ app.post("/create-checkout-session", async (req, res) => {
       });
     }
 
+    console.log("Precio enviado:", selectedPlan.price);
+
     const frontendUrl =
-      process.env.FRONTEND_URL || "https://www.tecnologíahoymismo.com";
+      process.env.FRONTEND_URL || "https://www.xn--tecnologahoymismo-kvb.com";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
@@ -78,5 +80,3 @@ app.post("/create-checkout-session", async (req, res) => {
 app.listen(process.env.PORT || 4242, () => {
   console.log("Servidor corriendo en puerto", process.env.PORT || 4242);
 });
-
-console.log("Precio enviado:", selectedPlan.price);
