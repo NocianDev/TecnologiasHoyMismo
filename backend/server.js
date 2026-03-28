@@ -21,27 +21,27 @@ app.post("/create-checkout-session", async (req, res) => {
     const plans = {
       landing: {
         name: "Landing Page",
-        price: 499900,
+        price: 1,
       },
       gps: {
         name: "GPS",
-        price: 899900,
+        price: 1,
       },
       campana: {
         name: "Campaña digital",
-        price: 899900,
+        price: 1,
       },
       ia: {
         name: "Proyecto IA",
-        price: 899900,
+        price: 1,
       },
       chatbot: {
         name: "Chatbot Inicial",
-        price: 899900,
+        price: 1,
       },
       api: {
         name: "API / Aplicación",
-        price: 699900,
+        price: 1,
       },
     };
 
