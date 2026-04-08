@@ -1,16 +1,39 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 
-function AvailabilityBadge() {
+function AvailabilityBadge({
+  mobile = false,
+}: {
+  mobile?: boolean;
+}) {
   return (
-    <div className="relative hidden md:flex shrink-0">
+    <div className="relative shrink-0">
       <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-xl" />
 
-      <div className="relative flex h-[48px] w-[48px] items-center justify-center rounded-full border border-yellow-300/35 bg-black/30 shadow-[0_0_16px_rgba(250,204,21,0.16)] backdrop-blur-sm">
-        <div className="absolute inset-[4px] rounded-full border-[3px] border-yellow-400/80" />
-        <div className="absolute right-[4px] top-[2px] h-3 w-3 rotate-[98deg] border-r-[4px] border-t-[4px] border-yellow-400" />
+      <div
+        className={`relative flex items-center justify-center rounded-full border border-yellow-300/35 bg-black/30 shadow-[0_0_16px_rgba(250,204,21,0.16)] backdrop-blur-sm ${
+          mobile ? "h-[34px] w-[34px]" : "h-[42px] w-[42px]"
+        }`}
+      >
+        <div
+          className={`absolute rounded-full border-yellow-400/80 ${
+            mobile ? "inset-[3px] border-[2px]" : "inset-[4px] border-[3px]"
+          }`}
+        />
 
-        <span className="relative z-10 text-[18px] font-black tracking-tight text-yellow-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.35)]">
+        <div
+          className={`absolute border-r-[3px] border-t-[3px] border-yellow-400 ${
+            mobile
+              ? "right-[2px] top-[2px] h-2.5 w-2.5 rotate-[98deg]"
+              : "right-[4px] top-[2px] h-3 w-3 rotate-[98deg]"
+          }`}
+        />
+
+        <span
+          className={`relative z-10 font-black tracking-tight text-yellow-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.35)] ${
+            mobile ? "text-[14px]" : "text-[15px]"
+          }`}
+        >
           24
         </span>
       </div>
@@ -22,7 +45,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `relative transition-colors duration-300 ${
+    `relative whitespace-nowrap transition-colors duration-300 ${
       isActive ? "text-yellow-400" : "text-white/85 hover:text-yellow-300"
     }`;
 
@@ -46,11 +69,10 @@ export default function Navbar() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.25),transparent_60%)] blur-2xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-10">
-        {/* LADO IZQUIERDO */}
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 xl:px-10">
         <Link
           to="/"
-          className="flex shrink-0 items-center gap-3"
+          className="flex min-w-0 items-center gap-2 sm:gap-3"
           onClick={closeMenu}
         >
           <div className="relative shrink-0">
@@ -58,28 +80,33 @@ export default function Navbar() {
             <img
               src="/images/Logo4.png"
               alt="Hoy Mismo Tecnología"
-              className="relative h-14 w-auto object-contain drop-shadow-[0_0_20px_rgba(250,204,21,0.3)] sm:h-16 md:h-20 lg:h-24"
+              className="relative h-12 w-auto object-contain drop-shadow-[0_0_20px_rgba(250,204,21,0.3)] sm:h-14 lg:h-16 xl:h-18 2xl:h-22"
             />
           </div>
 
-          {/* Desktop: nombre en una sola línea + 24 pegado */}
-          <div className="hidden md:flex items-center gap-3 shrink-0">
-            <p className="brand-title whitespace-nowrap text-3xl font-extrabold leading-none tracking-wide lg:text-4xl">
+          {/* Móvil y tablet */}
+          <div className="flex min-w-0 items-center gap-2 lg:hidden">
+            <p className="brand-title text-base font-extrabold leading-none tracking-wide sm:text-lg md:text-xl">
               HOY MISMO TECNOLOGÍA
             </p>
-            <AvailabilityBadge />
+            <AvailabilityBadge mobile />
           </div>
 
-          {/* Mobile */}
-          <div className="md:hidden">
-            <p className="brand-title text-xl font-extrabold leading-none tracking-wide sm:text-2xl">
+          {/* Desktop */}
+          <div className="hidden min-w-0 items-center lg:flex">
+            <p className="brand-title whitespace-nowrap text-[24px] font-extrabold leading-none tracking-wide xl:text-[28px] 2xl:text-[34px]">
               HOY MISMO TECNOLOGÍA
             </p>
+
+            {/* El 24 solo en pantallas muy amplias */}
+            <div className="ml-2 hidden 2xl:flex">
+              <AvailabilityBadge />
+            </div>
           </div>
         </Link>
 
-        {/* LADO DERECHO */}
-        <nav className="hidden flex-1 items-center justify-end gap-5 text-[16px] font-semibold md:flex lg:gap-7 lg:text-[20px]">
+        {/* Menú desktop */}
+        <nav className="hidden flex-1 items-center justify-end gap-4 text-[15px] font-semibold lg:flex xl:gap-5 xl:text-[17px] 2xl:gap-7 2xl:text-[20px]">
           <NavLink to="/" className={navLinkClass}>Inicio</NavLink>
           <NavLink to="/servicios" className={navLinkClass}>Servicios</NavLink>
           <NavLink to="/ia" className={navLinkClass}>IA</NavLink>
@@ -88,12 +115,13 @@ export default function Navbar() {
           <NavLink to="/contacto" className={navLinkClass}>Contacto</NavLink>
         </nav>
 
+        {/* Botón hamburguesa */}
         <button
           type="button"
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           aria-expanded={open}
           onClick={() => setOpen(!open)}
-          className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-yellow-400/30 hover:text-yellow-300 md:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-yellow-400/30 hover:text-yellow-300 lg:hidden"
         >
           <span className="relative block h-4 w-5">
             <span
@@ -115,19 +143,32 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Menú móvil / tablet */}
       <div
-        className={`relative z-10 overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
+        className={`relative z-10 overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-xl transition-all duration-300 lg:hidden ${
           open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
           <div className="flex flex-col gap-2">
-            <NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>Inicio</NavLink>
-            <NavLink to="/servicios" className={mobileNavLinkClass} onClick={closeMenu}>Servicios</NavLink>
-            <NavLink to="/ia" className={mobileNavLinkClass} onClick={closeMenu}>IA</NavLink>
-            <NavLink to="/apis" className={mobileNavLinkClass} onClick={closeMenu}>APIs</NavLink>
-            <NavLink to="/chatbots" className={mobileNavLinkClass} onClick={closeMenu}>Chatbots</NavLink>
-            <NavLink to="/contacto" className={mobileNavLinkClass} onClick={closeMenu}>Contacto</NavLink>
+            <NavLink to="/" className={mobileNavLinkClass} onClick={closeMenu}>
+              Inicio
+            </NavLink>
+            <NavLink to="/servicios" className={mobileNavLinkClass} onClick={closeMenu}>
+              Servicios
+            </NavLink>
+            <NavLink to="/ia" className={mobileNavLinkClass} onClick={closeMenu}>
+              IA
+            </NavLink>
+            <NavLink to="/apis" className={mobileNavLinkClass} onClick={closeMenu}>
+              APIs
+            </NavLink>
+            <NavLink to="/chatbots" className={mobileNavLinkClass} onClick={closeMenu}>
+              Chatbots
+            </NavLink>
+            <NavLink to="/contacto" className={mobileNavLinkClass} onClick={closeMenu}>
+              Contacto
+            </NavLink>
           </div>
         </nav>
       </div>
