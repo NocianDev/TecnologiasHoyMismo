@@ -1,6 +1,23 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 
+function AvailabilityBadge() {
+  return (
+    <div className="relative hidden md:flex shrink-0">
+      <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur-xl" />
+
+      <div className="relative flex h-[48px] w-[48px] items-center justify-center rounded-full border border-yellow-300/35 bg-black/30 shadow-[0_0_16px_rgba(250,204,21,0.16)] backdrop-blur-sm">
+        <div className="absolute inset-[4px] rounded-full border-[3px] border-yellow-400/80" />
+        <div className="absolute right-[4px] top-[2px] h-3 w-3 rotate-[98deg] border-r-[4px] border-t-[4px] border-yellow-400" />
+
+        <span className="relative z-10 text-[18px] font-black tracking-tight text-yellow-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.35)]">
+          24
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -26,17 +43,17 @@ export default function Navbar() {
           style={{ backgroundImage: "url('/images/Hexagonos2.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-yellow-400/35 to-black/80" />
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80" /> */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(250,204,21,0.25),transparent_60%)] blur-2xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
+      <div className="relative z-10 mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-10">
+        {/* LADO IZQUIERDO */}
         <Link
           to="/"
-          className="flex items-center gap-1"
+          className="flex shrink-0 items-center gap-3"
           onClick={closeMenu}
         >
-          <div className="relative">
+          <div className="relative shrink-0">
             <div className="absolute inset-0 rounded-full bg-yellow-400/30 blur-xl" />
             <img
               src="/images/Logo4.png"
@@ -45,12 +62,24 @@ export default function Navbar() {
             />
           </div>
 
-          <p className="brand-title text-xl font-extrabold tracking-wide sm:text-3xl md:text-4xl">
-            HOY MISMO TECNOLOGÍA
-          </p>
+          {/* Desktop: nombre en una sola línea + 24 pegado */}
+          <div className="hidden md:flex items-center gap-3 shrink-0">
+            <p className="brand-title whitespace-nowrap text-3xl font-extrabold leading-none tracking-wide lg:text-4xl">
+              HOY MISMO TECNOLOGÍA
+            </p>
+            <AvailabilityBadge />
+          </div>
+
+          {/* Mobile */}
+          <div className="md:hidden">
+            <p className="brand-title text-xl font-extrabold leading-none tracking-wide sm:text-2xl">
+              HOY MISMO TECNOLOGÍA
+            </p>
+          </div>
         </Link>
 
-        <nav className="hidden items-center gap-7 text-[17px] font-semibold md:flex lg:text-[20px]">
+        {/* LADO DERECHO */}
+        <nav className="hidden flex-1 items-center justify-end gap-5 text-[16px] font-semibold md:flex lg:gap-7 lg:text-[20px]">
           <NavLink to="/" className={navLinkClass}>Inicio</NavLink>
           <NavLink to="/servicios" className={navLinkClass}>Servicios</NavLink>
           <NavLink to="/ia" className={navLinkClass}>IA</NavLink>

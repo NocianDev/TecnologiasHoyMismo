@@ -387,46 +387,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PREGUNTAS FRECUENTES */}
-      <section className="section">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="badge">Preguntas frecuentes</span>
-          <h2 className="mt-5 text-4xl font-bold title-gradient">
-            Resolvemos lo que normalmente preguntan nuestros clientes
-          </h2>
-        </div>
-
-        <div className="mt-12 space-y-5">
-          <div className="card">
-            <h3 className="text-xl font-bold text-yellow-400">¿Solo hacen páginas web?</h3>
-            <p className="mt-3 text-white/75">
-              No. También desarrollamos automatizaciones, integraciones por API,
-              chatbots, asistentes inteligentes y sistemas personalizados según
-              las necesidades del proyecto.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3 className="text-xl font-bold text-yellow-400">
-              ¿Pueden adaptar la solución a mi negocio?
-            </h3>
-            <p className="mt-3 text-white/75">
-              Sí. La idea es construir algo alineado a tu giro, tu imagen,
-              tus procesos y tus objetivos, no una plantilla genérica.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3 className="text-xl font-bold text-yellow-400">
-              ¿Se puede escalar después?
-            </h3>
-            <p className="mt-3 text-white/75">
-              Sí. Dejamos bases preparadas para añadir nuevas funciones, módulos,
-              automatizaciones, formularios, conexiones o mejoras visuales.
-            </p>
-          </div>
-        </div>
-      </section>
+      
 
       {/* CTA FINAL */}
       <section className="section pt-6">
