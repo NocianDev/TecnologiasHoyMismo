@@ -4,7 +4,8 @@ type PageHeroProps = {
   badge: string;
   title: ReactNode;
   description: string;
-  image: string;
+  image?: string;
+  video?: string; // 🔥 NUEVO
   imageAlt?: string;
 };
 
@@ -13,10 +14,11 @@ export default function PageHero({
   title,
   description,
   image,
+  video,
   imageAlt,
 }: PageHeroProps) {
   const isYoutube =
-    image.includes("youtube.com") || image.includes("youtu.be");
+    image?.includes("youtube.com") || image?.includes("youtu.be");
 
   const getYoutubeEmbed = (url: string) => {
     const id = url.includes("youtu.be/")
@@ -37,8 +39,8 @@ export default function PageHero({
           </span>
 
           <h1 className="text-4xl font-bold leading-tight text-yellow-400 sm:text-5xl lg:text-6xl">
-  {title}
-</h1>
+            {title}
+          </h1>
 
           <p className="text-white/80 text-lg">
             {description}
@@ -48,7 +50,24 @@ export default function PageHero({
         {/* MEDIA */}
         <div className="relative h-[300px] w-full overflow-hidden rounded-2xl md:h-[400px]">
           
-          {isYoutube ? (
+          {/* 🔥 VIDEO MP4 */}
+          {video ? (
+            <>
+              <video
+  src={video}
+  autoPlay
+  loop
+  controls
+  playsInline
+  className="h-full w-full object-cover rounded-2xl"
+/>
+
+              {/* overlay pro */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/30" />
+            </>
+          ) : isYoutube && image ? (
+            
+            /* 🔥 YOUTUBE */
             <div className="relative h-full w-full">
               <iframe
                 src={getYoutubeEmbed(image)}
@@ -60,7 +79,10 @@ export default function PageHero({
               {/* overlay pro */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/30" />
             </div>
+
           ) : (
+            
+            /* 🔥 IMAGEN */
             <img
               src={image}
               alt={imageAlt}

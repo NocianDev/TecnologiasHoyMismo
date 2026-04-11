@@ -10,7 +10,7 @@ export default function IA() {
         badge="Inteligencia Artificial"
         title="IA con función de call center o recepcionista"
         description="Construimos inteligencias artificiales que atienden llamadas 24/7, responden clientes y automatizan la comunicación de tu negocio."
-        image="https://www.youtube.com/watch?v=6EqjG1kKTBA"
+        video="/videos/HoyMismo Assistant.mp4" // 🔥 VIDEO MP4 LOCAL
         imageAlt="Inteligencia artificial aplicada a negocios"
       />
 
@@ -104,7 +104,7 @@ export default function IA() {
         </a>
       </section>
 
-      {/* 🔥 PORTAFOLIO (lo que ya tenías) */}
+      {/* 🔥 PORTAFOLIO */}
       <section className="section pt-6">
         <div className="mt-6 space-y-8">
           {IA_PROJECTS.map((project, index) => (
