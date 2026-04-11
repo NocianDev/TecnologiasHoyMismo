@@ -188,13 +188,12 @@ export default function Home() {
           {/* IA (video) */}
           <div className="card">
             <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
-              <iframe
-                src="https://www.youtube.com/embed/6EqjG1kKTBA"
-                className="h-full w-full"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
-            </div>
+  <video
+    src="/videos/HoyMismo Assistant.mp4"
+    className="h-full w-full object-cover"
+    controls
+  />
+</div>
             <h3 className="text-xl font-bold text-yellow-400">Automatización con IA</h3>
             <p className="mt-3 text-white/75">
               Implementamos herramientas inteligentes que responden, clasifican,
