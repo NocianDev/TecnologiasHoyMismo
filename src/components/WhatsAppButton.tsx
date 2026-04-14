@@ -1,6 +1,12 @@
 import { FaWhatsapp } from "react-icons/fa";
+import { useLocation } from "react-router-dom"; // 🔥 IMPORTANTE
 
 export default function WhatsAppButton() {
+  const location = useLocation();
+
+  // 🔥 ocultar en la demo
+  if (location.pathname === "/ia/demo") return null;
+
   const phone = "528121602495";
   const message = encodeURIComponent(
     "Hola, me interesa recibir información sobre sus servicios."

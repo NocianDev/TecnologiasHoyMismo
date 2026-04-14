@@ -10,6 +10,7 @@ import Chatbots from "./pages/Chatbots";
 import Contacto from "./pages/Contacto";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import AssistantDemo from "./pages/AssistantDemo";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/success" element={<Success />} />
         <Route path="/cancel" element={<Cancel />} />
+        <Route path="/ia/demo" element={<AssistantDemo />} />
       </Routes>
 
       <WhatsAppButton />

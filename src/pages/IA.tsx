@@ -1,7 +1,8 @@
-import PortfolioCard from "../components/PortfolioCard";
+import PortfolioCard from "../components/PortfolioCard"; 
 import PageHero from "../components/PageHero";
 import { IA_PROJECTS } from "../data/portfolioData";
 import Reveal from "../components/Reveal";
+import { Link } from "react-router-dom"; // 🔥 IMPORTANTE
 
 export default function IA() {
   return (
@@ -10,9 +11,19 @@ export default function IA() {
         badge="Inteligencia Artificial"
         title="IA con función de call center o recepcionista"
         description="Construimos inteligencias artificiales que atienden llamadas 24/7, responden clientes y automatizan la comunicación de tu negocio."
-        video="/videos/HoyMismo Assistant.mp4" // 🔥 VIDEO MP4 LOCAL
+        video="/videos/HoyMismo Assistant.mp4"
         imageAlt="Inteligencia artificial aplicada a negocios"
       />
+
+      {/* 🔥 BOTÓN PRINCIPAL (NUEVO) */}
+      <section className="section pt-6 text-center">
+        <Link
+          to="/ia/demo"
+          className="inline-block rounded-2xl bg-yellow-400 px-8 py-4 text-lg font-bold text-black shadow-lg transition hover:bg-yellow-300 hover:scale-105"
+        >
+          Probar asistente en vivo
+        </Link>
+      </section>
 
       {/* 🔥 SECCIÓN EXPLICATIVA */}
       <section className="section">
