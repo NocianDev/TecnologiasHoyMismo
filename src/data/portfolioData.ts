@@ -12,15 +12,15 @@ export type PortfolioProject = {
 
 export const IA_PROJECTS: PortfolioProject[] = [
   {
-    title: "VocalisAI V3 — Multi-Agent Voice Intelligence",
+    title: "Hoy Mismo Assistant — Recepcionista virtual con IA",
     subtitle: "Solución propia de inteligencia artificial",
     description:
-      "Sistema multi-agente de voz con inteligencia artificial orientado a atención automatizada, seguimiento conversacional, interacción por voz y automatización de procesos en tiempo real.",
-    tech: ["Gemini Live API", "ElevenLabs", "Twilio", "Stripe", "Voice AI"],
+      "Asistente inteligente diseñado para responder llamadas, orientar clientes, automatizar conversaciones y mejorar la atención de negocios, clínicas y empresas con disponibilidad 24/7.",
+    tech: ["OpenRouter", "ElevenLabs", "OpenAI", "MongoDB", "Voice AI"],
     metric: "24/7",
     metricLabel: "Disponibilidad",
     extra:
-      "Plataforma diseñada para automatizar interacciones por voz, mejorar la atención y escalar procesos conversacionales con IA avanzada.",
+      "Plataforma pensada para atención automatizada, captación de leads, seguimiento conversacional y evolución hacia experiencias de voz más naturales y profesionales.",
     color: "purple",
     featured: true,
   },
