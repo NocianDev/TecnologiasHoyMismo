@@ -55,7 +55,7 @@ export default function IA() {
         badge="Inteligencia Artificial"
         title="IA con función de call center o recepcionista"
         description="Construimos inteligencias artificiales que atienden llamadas 24/7, responden clientes y automatizan la comunicación de tu negocio."
-        video="/videos/HoyMismo Assistant.mp4"
+        video="/videos/Video 2.mp4"
         imageAlt="Inteligencia artificial aplicada a negocios"
       />
 

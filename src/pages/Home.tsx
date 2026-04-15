@@ -189,7 +189,7 @@ export default function Home() {
           <div className="card">
             <div className="mb-6 h-32 w-full overflow-hidden rounded-2xl border border-white/10">
   <video
-    src="/videos/HoyMismo Assistant.mp4"
+    src="/videos/Video 2.mp4"
     className="h-full w-full object-cover"
     controls
   />
