@@ -43,7 +43,7 @@ export default function PortfolioCard({ project }: Props) {
 
   return (
     <article className="card overflow-hidden">
-      <div className="grid gap-8 lg:grid-cols-[1fr_auto]">
+      <div className="grid items-start gap-8 lg:grid-cols-[1fr_auto]">
         <div>
           {project.featured && (
             <div className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.15em] text-yellow-300">
@@ -52,26 +52,9 @@ export default function PortfolioCard({ project }: Props) {
             </div>
           )}
 
-          <h3 className={`text-3xl font-bold ${colors.title}`}>{project.title}</h3>
-
-          <p className={`mt-2 text-lg font-medium ${colors.title}`}>
-            {project.subtitle}
-          </p>
-
-          <p className="mt-6 max-w-4xl text-lg leading-8 text-white/75">
-            {project.description}
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            {project.tech.map((item) => (
-              <span
-                key={item}
-                className={`rounded-full border px-4 py-2 text-sm font-medium ${colors.badge}`}
-              >
-                {item}
-              </span>
-            ))}
-          </div>
+          <h3 className={`text-3xl font-bold ${colors.title}`}>
+            {project.title}
+          </h3>
         </div>
 
         <div className="flex min-w-[180px] flex-col items-end justify-between">
@@ -79,7 +62,9 @@ export default function PortfolioCard({ project }: Props) {
             <div className={`text-6xl font-extrabold ${colors.metric}`}>
               {project.metric}
             </div>
-            <div className="mt-2 text-xl text-white/45">{project.metricLabel}</div>
+            <div className="mt-2 text-xl text-white/45">
+              {project.metricLabel}
+            </div>
           </div>
 
           <Link
@@ -90,10 +75,6 @@ export default function PortfolioCard({ project }: Props) {
             <span>→</span>
           </Link>
         </div>
-      </div>
-
-      <div className="mt-8 border-t border-white/8 pt-8 text-lg text-white/45">
-        {project.extra}
       </div>
     </article>
   );

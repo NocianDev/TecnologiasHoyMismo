@@ -18,7 +18,7 @@ export default function Servicios() {
 
     <div className="flex items-start gap-3">
       <span className="mt-2 text-white">•</span>
-      <span>GPS para cargamentos</span>
+      <span>Tecnologia con IA</span>
     </div>
 
     <div className="flex items-start gap-3">
@@ -28,7 +28,7 @@ export default function Servicios() {
 
   </div>
 }
-        description="Desarrollamos plataformas y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real, además de servicios de GPS de gran precisión y campañas con enfoque en redes sociales para empresas."
+        description="Desarrollamos plataformas y soluciones web orientadas a productividad, control operativo, presencia digital y escalabilidad real, implementaciones modernas con IA y campañas con enfoque en redes sociales para empresas."
         image="/images/System.png"
         imageAlt="Servicios y plataformas empresariales"
       />

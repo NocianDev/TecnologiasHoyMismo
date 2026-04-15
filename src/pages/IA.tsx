@@ -73,7 +73,7 @@ export default function IA() {
 
             <p className="max-w-3xl text-lg leading-relaxed text-white/75">
               No es solo un bot. Es una solución diseñada para atender clientes,
-              responder llamadas, filtrar oportunidades y elevar la imagen de tu
+              responder llamadas, filtrar oportunidades y elevar la imagen,el alcance y las ganacias de tu
               empresa con una experiencia profesional.
             </p>
 
