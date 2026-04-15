@@ -6,7 +6,7 @@ export default function Contacto() {
   ) {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+        `${import.meta.env.VITE_MAIN_API_URL}/create-checkout-session`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -35,7 +35,7 @@ export default function Contacto() {
       <section className="section pt-8">
         <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10">
           <img
-            src="/images/Contacto3.png"
+            src="/images/Contactos 6.png"
             alt="Contacto"
             className="block h-[200px] w-full object-cover sm:h-[260px] md:h-[320px]"
           />
