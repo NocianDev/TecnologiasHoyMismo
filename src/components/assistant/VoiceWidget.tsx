@@ -152,6 +152,7 @@ export default function VoiceWidget({
   const lastSoundTimeRef = useRef<number>(Date.now());
   const recordingStopTimerRef = useRef<number | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const recordingStartedAtRef = useRef<number>(0);
 
   const conversationIdRef = useRef<string>(
     `voice-widget-${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -466,8 +467,8 @@ export default function VoiceWidget({
 
   async function playAssistantAudio(ttsText: string, agent = "general") {
     const apiUrl =
-  import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
-  "http://localhost:3000";
+      import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
+      "http://localhost:3000";
 
     const tenantId = import.meta.env.VITE_TENANT_ID;
 
@@ -484,7 +485,7 @@ export default function VoiceWidget({
           agent,
         }),
       },
-      45000
+      30000
     );
 
     if (!res.ok) {
@@ -530,8 +531,8 @@ export default function VoiceWidget({
 
     try {
       const apiUrl =
-  import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
-  "http://localhost:3000";
+        import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
+        "http://localhost:3000";
 
       const tenantId = import.meta.env.VITE_TENANT_ID;
 
@@ -550,7 +551,7 @@ export default function VoiceWidget({
             channel: "voice",
           }),
         },
-        35000
+        25000
       );
 
       if (!res.ok) {
@@ -563,7 +564,7 @@ export default function VoiceWidget({
       setLastResponse(reply);
 
       if (data?.ttsEnabled && data?.ttsText) {
-        relistenCooldownRef.current = Date.now() + 1800;
+        relistenCooldownRef.current = Date.now() + 2000;
         await playAssistantAudio(
           data.ttsText,
           data?.voiceAgent || data?.agent || "general"
@@ -572,8 +573,8 @@ export default function VoiceWidget({
 
       setIsBusy(false);
       setVoiceState("idle");
-      relistenCooldownRef.current = Date.now() + 900;
-      scheduleRelisten(900);
+      relistenCooldownRef.current = Date.now() + 1000;
+      scheduleRelisten(1000);
     } catch (error: any) {
       console.error(error);
       setVoiceState("idle");
@@ -583,8 +584,8 @@ export default function VoiceWidget({
           : error?.message || "Error conectando con el asistente."
       );
       setIsBusy(false);
-      relistenCooldownRef.current = Date.now() + 1200;
-      scheduleRelisten(1200);
+      relistenCooldownRef.current = Date.now() + 1400;
+      scheduleRelisten(1400);
     }
   }
 
@@ -593,17 +594,17 @@ export default function VoiceWidget({
 
     try {
       const apiUrl =
-  import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
-  "http://localhost:3000";
+        import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
+        "http://localhost:3000";
 
       const tenantId = import.meta.env.VITE_TENANT_ID;
 
-      if (!blob || blob.size < 8000) {
+      if (!blob || blob.size < 3000) {
         setVoiceState("idle");
         setLastResponse(
-          "No se detectó suficiente audio. Intenta hablar un poco más fuerte."
+          "No se detectó suficiente audio. Intenta hablar un poco más claro o espera un poco más antes de pausar."
         );
-        scheduleRelisten(900);
+        scheduleRelisten(1000);
         return;
       }
 
@@ -622,7 +623,7 @@ export default function VoiceWidget({
           },
           body: formData,
         },
-        45000
+        30000
       );
 
       if (!res.ok) {
@@ -634,7 +635,7 @@ export default function VoiceWidget({
 
       if (shouldIgnoreTranscript(text)) {
         setVoiceState("idle");
-        scheduleRelisten(900);
+        scheduleRelisten(1000);
         return;
       }
 
@@ -647,7 +648,7 @@ export default function VoiceWidget({
           ? "La transcripción tardó demasiado. Intenta otra vez."
           : error?.message || "Error al transcribir el audio."
       );
-      scheduleRelisten(1200);
+      scheduleRelisten(1400);
     }
   }
 
@@ -665,27 +666,51 @@ export default function VoiceWidget({
 
     stopRecognition();
     recognitionHadResultRef.current = false;
+    setTranscript("");
 
     const recognition = new SpeechRecognitionAPI();
     recognition.lang = "es-MX";
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true;
     recognition.maxAlternatives = 1;
+
+    let finalTranscript = "";
 
     recognition.onstart = () => {
       setVoiceState("listening");
     };
 
     recognition.onresult = async (event: any) => {
+      let interimTranscript = "";
+      let detectedFinal = false;
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i];
+        const text = result?.[0]?.transcript || "";
+
+        if (result.isFinal) {
+          finalTranscript += text;
+          detectedFinal = true;
+        } else {
+          interimTranscript += text;
+        }
+      }
+
+      const liveText = (finalTranscript + " " + interimTranscript).trim();
+      if (liveText) {
+        setTranscript(liveText);
+      }
+
+      if (!detectedFinal) return;
+
       recognitionHadResultRef.current = true;
-      const text = event?.results?.[0]?.[0]?.transcript?.trim() || "";
-      setTranscript(text);
+      const text = finalTranscript.trim();
 
       stopRecognition();
 
       if (shouldIgnoreTranscript(text)) {
         setVoiceState("idle");
-        scheduleRelisten(900);
+        scheduleRelisten(1000);
         return;
       }
 
@@ -697,7 +722,7 @@ export default function VoiceWidget({
       setVoiceState("idle");
 
       if (!busyRef.current && !speakingRef.current) {
-        scheduleRelisten(1200);
+        scheduleRelisten(1400);
       }
     };
 
@@ -711,7 +736,7 @@ export default function VoiceWidget({
         !busyRef.current &&
         !speakingRef.current
       ) {
-        scheduleRelisten(700);
+        scheduleRelisten(900);
       }
     };
 
@@ -749,6 +774,7 @@ export default function VoiceWidget({
       stopRecorder();
       stopStream();
       audioChunksRef.current = [];
+      setTranscript("");
 
       const stream = await requestMicPermissionSilently();
       streamRef.current = stream;
@@ -793,9 +819,10 @@ export default function VoiceWidget({
         ) as Uint8Array<ArrayBuffer>;
       }
 
-      const SILENCE_THRESHOLD = 6;
-      const SILENCE_DURATION_MS = 2000;
-      const MAX_RECORDING_TIME_MS = 9000;
+      const SILENCE_THRESHOLD = 5;
+      const SILENCE_DURATION_MS = 3200;
+      const MIN_RECORDING_TIME_MS = 1800;
+      const MAX_RECORDING_TIME_MS = 15000;
 
       function detectSilence() {
         if (
@@ -823,9 +850,14 @@ export default function VoiceWidget({
           lastSoundTimeRef.current = Date.now();
         }
 
-        const silenceDuration = Date.now() - lastSoundTimeRef.current;
+        const now = Date.now();
+        const silenceDuration = now - lastSoundTimeRef.current;
+        const recordingElapsed = now - recordingStartedAtRef.current;
 
-        if (silenceDuration >= SILENCE_DURATION_MS) {
+        if (
+          recordingElapsed >= MIN_RECORDING_TIME_MS &&
+          silenceDuration >= SILENCE_DURATION_MS
+        ) {
           if (
             recorderRef.current &&
             recorderRef.current.state === "recording"
@@ -841,6 +873,7 @@ export default function VoiceWidget({
       recorder.onstart = () => {
         setVoiceState("recording");
         lastSoundTimeRef.current = Date.now();
+        recordingStartedAtRef.current = Date.now();
 
         if (analyser && dataArray) {
           silenceFrameRef.current = requestAnimationFrame(detectSilence);
@@ -891,7 +924,7 @@ export default function VoiceWidget({
         stopStream();
         setVoiceState("idle");
         setLastResponse("El navegador falló al grabar el audio.");
-        scheduleRelisten(1200);
+        scheduleRelisten(1400);
       };
 
       recorder.start();
