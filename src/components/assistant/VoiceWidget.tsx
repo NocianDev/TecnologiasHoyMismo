@@ -5,6 +5,7 @@ type MicPermissionState = "unknown" | "prompt" | "granted" | "denied";
 
 type Props = {
   assistantName?: string;
+  agentId?: string;
 };
 
 declare global {
@@ -95,8 +96,14 @@ function normalizeSpokenText(text: string) {
     .replace(/\s+/g, " ");
 }
 
+function isMobileDevice() {
+  if (typeof navigator === "undefined") return false;
+  return /Android|iPhone|iPad|iPod|mobile/i.test(navigator.userAgent);
+}
+
 export default function VoiceWidget({
   assistantName = "HoyMismo Voice",
+  agentId = "general",
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [voiceState, setVoiceState] = useState<VoiceState>("idle");
@@ -115,25 +122,26 @@ export default function VoiceWidget({
     useState<MicPermissionState>("unknown");
   const [showPermissionScreen, setShowPermissionScreen] = useState(true);
 
+  const [activeAgentId, setActiveAgentId] = useState(agentId);
+
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
-  const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
 
   const speakingRef = useRef(false);
   const stoppedRef = useRef(false);
   const callActiveRef = useRef(false);
   const autoContinueRef = useRef(true);
   const busyRef = useRef(false);
-  const relistenCooldownRef = useRef(0);
   const lastAcceptedTranscriptRef = useRef("");
-  const restartGuardRef = useRef<number | null>(null);
+  const relistenTimerRef = useRef<number | null>(null);
 
-  const silenceFrameRef = useRef<number | null>(null);
-  const lastSoundTimeRef = useRef<number>(Date.now());
-  const recordingStopTimerRef = useRef<number | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const recordingStartedAtRef = useRef<number>(0);
+  const silenceMonitorRafRef = useRef<number | null>(null);
+  const analyserContextRef = useRef<AudioContext | null>(null);
+  const analyserSourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
+  const analyserNodeRef = useRef<AnalyserNode | null>(null);
 
   const conversationIdRef = useRef<string>(
     `voice-widget-${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -150,7 +158,10 @@ export default function VoiceWidget({
   }, []);
 
   useEffect(() => {
-    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
+    if (
+      !navigator.mediaDevices?.getUserMedia ||
+      typeof MediaRecorder === "undefined"
+    ) {
       setUnsupported(true);
     }
   }, []);
@@ -168,9 +179,13 @@ export default function VoiceWidget({
   }, [isBusy]);
 
   useEffect(() => {
+    setActiveAgentId(agentId);
+  }, [agentId]);
+
+  useEffect(() => {
     if (!callActive) return;
 
-    const timer = setInterval(() => {
+    const timer = window.setInterval(() => {
       setSeconds((prev) => prev + 1);
     }, 1000);
 
@@ -215,85 +230,6 @@ export default function VoiceWidget({
     };
   }, [isOpen]);
 
-  function formatTime(totalSeconds: number) {
-    const mins = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
-    const secs = String(totalSeconds % 60).padStart(2, "0");
-    return `${mins}:${secs}`;
-  }
-
-  function clearSilenceDetection() {
-    if (silenceFrameRef.current) {
-      cancelAnimationFrame(silenceFrameRef.current);
-      silenceFrameRef.current = null;
-    }
-
-    if (recordingStopTimerRef.current) {
-      window.clearTimeout(recordingStopTimerRef.current);
-      recordingStopTimerRef.current = null;
-    }
-
-    if (audioContextRef.current) {
-      try {
-        void audioContextRef.current.close();
-      } catch {}
-      audioContextRef.current = null;
-    }
-  }
-
-  function stopRecorder() {
-    clearSilenceDetection();
-
-    if (recorderRef.current) {
-      try {
-        if (recorderRef.current.state !== "inactive") {
-          recorderRef.current.stop();
-        }
-      } catch {}
-      recorderRef.current = null;
-    }
-  }
-
-  function stopStream() {
-    if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null;
-    }
-  }
-
-  function stopAudioPlayback() {
-    if (audioPlayerRef.current) {
-      try {
-        audioPlayerRef.current.pause();
-        audioPlayerRef.current.src = "";
-      } catch {}
-      audioPlayerRef.current = null;
-    }
-    speakingRef.current = false;
-  }
-
-  function clearRestartGuard() {
-    if (restartGuardRef.current) {
-      window.clearTimeout(restartGuardRef.current);
-      restartGuardRef.current = null;
-    }
-  }
-
-  function hardStopEverything() {
-    try {
-      clearRestartGuard();
-      clearSilenceDetection();
-      stopRecorder();
-      stopStream();
-      stopAudioPlayback();
-      setIsBusy(false);
-      setVoiceState("idle");
-      busyRef.current = false;
-      speakingRef.current = false;
-    } catch (err) {
-      console.error("Error cerrando audio:", err);
-    }
-  }
-
   useEffect(() => {
     function handleVisibilityChange() {
       if (document.hidden) {
@@ -321,28 +257,101 @@ export default function VoiceWidget({
     };
   }, []);
 
-  function canRelisten() {
-    if (stoppedRef.current) return false;
-    if (!callActiveRef.current) return false;
-    if (!autoContinueRef.current) return false;
-    if (speakingRef.current) return false;
-    if (busyRef.current) return false;
-    if (Date.now() < relistenCooldownRef.current) return false;
-    return true;
+  function formatTime(totalSeconds: number) {
+    const mins = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+    const secs = String(totalSeconds % 60).padStart(2, "0");
+    return `${mins}:${secs}`;
   }
 
-  function scheduleRelisten(delay = 1200) {
-    clearRestartGuard();
+  function clearSilenceMonitor() {
+    if (silenceMonitorRafRef.current) {
+      cancelAnimationFrame(silenceMonitorRafRef.current);
+      silenceMonitorRafRef.current = null;
+    }
 
-    restartGuardRef.current = window.setTimeout(() => {
-      if (!canRelisten()) {
-        if (!busyRef.current && !speakingRef.current) {
-          setVoiceState("idle");
+    try {
+      analyserSourceRef.current?.disconnect();
+    } catch {}
+
+    try {
+      analyserNodeRef.current?.disconnect();
+    } catch {}
+
+    try {
+      analyserContextRef.current?.close();
+    } catch {}
+
+    analyserSourceRef.current = null;
+    analyserNodeRef.current = null;
+    analyserContextRef.current = null;
+  }
+
+  function stopRecorder() {
+    clearSilenceMonitor();
+
+    if (recorderRef.current) {
+      try {
+        if (recorderRef.current.state !== "inactive") {
+          recorderRef.current.stop();
         }
-        return;
-      }
+      } catch {}
+      recorderRef.current = null;
+    }
+  }
 
-      void startUnifiedRecording();
+  function stopStream() {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+  }
+
+  function cleanupSpeech() {
+    try {
+      if (audioElementRef.current) {
+        audioElementRef.current.pause();
+        audioElementRef.current.currentTime = 0;
+      }
+    } catch {}
+
+    if (audioUrlRef.current) {
+      URL.revokeObjectURL(audioUrlRef.current);
+      audioUrlRef.current = null;
+    }
+
+    audioElementRef.current = null;
+    speakingRef.current = false;
+  }
+
+  function clearRelistenTimer() {
+    if (relistenTimerRef.current) {
+      window.clearTimeout(relistenTimerRef.current);
+      relistenTimerRef.current = null;
+    }
+  }
+
+  function hardStopEverything() {
+    clearRelistenTimer();
+    stopRecorder();
+    stopStream();
+    cleanupSpeech();
+    setIsBusy(false);
+    busyRef.current = false;
+    speakingRef.current = false;
+    setVoiceState("idle");
+  }
+
+  function scheduleRelisten(delay = 1800) {
+    clearRelistenTimer();
+
+    relistenTimerRef.current = window.setTimeout(() => {
+      if (stoppedRef.current) return;
+      if (!callActiveRef.current) return;
+      if (!autoContinueRef.current) return;
+      if (speakingRef.current) return;
+      if (busyRef.current) return;
+
+      void startAudioRecording();
     }, delay);
   }
 
@@ -364,6 +373,7 @@ export default function VoiceWidget({
     }
 
     const previous = lastAcceptedTranscriptRef.current;
+
     if (normalized === previous) {
       return true;
     }
@@ -371,7 +381,7 @@ export default function VoiceWidget({
     if (
       previous &&
       (normalized.includes(previous) || previous.includes(normalized)) &&
-      normalized.length < 12
+      normalized.length < 10
     ) {
       return true;
     }
@@ -380,13 +390,13 @@ export default function VoiceWidget({
     return false;
   }
 
-  async function safeFetch(
+  async function safeFetchJson(
     url: string,
     options: RequestInit,
     timeoutMs = 30000
   ) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
 
     try {
       const res = await fetch(url, {
@@ -394,91 +404,91 @@ export default function VoiceWidget({
         signal: controller.signal,
       });
 
-      return res;
+      let data: any = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
+
+      return { res, data };
     } finally {
       clearTimeout(timer);
     }
   }
 
-  async function safeFetchJson(
-    url: string,
-    options: RequestInit,
-    timeoutMs = 30000
-  ) {
-    const res = await safeFetch(url, options, timeoutMs);
+  async function speakText(text: string, voiceAgentId?: string) {
+    if (!text?.trim()) return;
 
-    let data: any = null;
-    try {
-      data = await res.json();
-    } catch {
-      data = null;
-    }
-
-    return { res, data };
-  }
-
-  async function playAssistantAudio(ttsText: string, agentId = "general") {
     const apiUrl =
       import.meta.env.VITE_ASSISTANT_API_URL?.replace(/\/+$/, "") ||
       "http://localhost:3000";
 
     const tenantId = import.meta.env.VITE_TENANT_ID;
 
-    const res = await safeFetch(
-      `${apiUrl}/voice/speak`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-tenant-id": tenantId,
-        },
-        body: JSON.stringify({
-          text: ttsText,
-          agentId,
-        }),
-      },
-      30000
-    );
-
-    if (!res.ok) {
-      let data: any = null;
-      try {
-        data = await res.json();
-      } catch {}
-      throw new Error(data?.error || `Error /voice/speak (${res.status})`);
-    }
-
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    const audio = new Audio(url);
-
-    audioPlayerRef.current = audio;
     speakingRef.current = true;
     setVoiceState("speaking");
 
-    return new Promise<void>((resolve) => {
-      const cleanup = () => {
-        speakingRef.current = false;
-        if (audioPlayerRef.current === audio) {
-          audioPlayerRef.current = null;
-        }
-        URL.revokeObjectURL(url);
-        resolve();
-      };
+    try {
+      if (audioElementRef.current) {
+        try {
+          audioElementRef.current.pause();
+          audioElementRef.current.currentTime = 0;
+        } catch {}
+      }
 
-      audio.onended = cleanup;
-      audio.onerror = cleanup;
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+        audioUrlRef.current = null;
+      }
 
-      audio.play().catch(() => {
-        cleanup();
+      const response = await fetch(`${apiUrl}/voice/speak`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-tenant-id": tenantId || "",
+          "x-client-type": isMobileDevice() ? "mobile" : "desktop",
+        },
+        body: JSON.stringify({
+          text,
+          tenantId,
+          agentId: voiceAgentId || activeAgentId,
+          clientType: isMobileDevice() ? "mobile" : "desktop",
+        }),
       });
-    });
+
+      if (!response.ok) {
+        throw new Error(`Error /voice/speak (${response.status})`);
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      audioUrlRef.current = audioUrl;
+
+      const audio = new Audio(audioUrl);
+      audioElementRef.current = audio;
+
+      await new Promise<void>((resolve, reject) => {
+        audio.onended = () => resolve();
+        audio.onerror = () =>
+          reject(new Error("No se pudo reproducir el audio."));
+        audio.play().catch(reject);
+      });
+    } finally {
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+        audioUrlRef.current = null;
+      }
+      audioElementRef.current = null;
+      speakingRef.current = false;
+    }
   }
 
   async function sendVoiceTextToAssistant(text: string) {
     if (busyRef.current) return;
 
     setIsBusy(true);
+    busyRef.current = true;
     setVoiceState("thinking");
 
     try {
@@ -487,6 +497,7 @@ export default function VoiceWidget({
         "http://localhost:3000";
 
       const tenantId = import.meta.env.VITE_TENANT_ID;
+      const clientType = isMobileDevice() ? "mobile" : "desktop";
 
       const { res, data } = await safeFetchJson(
         `${apiUrl}/chat`,
@@ -494,21 +505,27 @@ export default function VoiceWidget({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "x-tenant-id": tenantId,
-            "x-client-type": "voice",
+            "x-tenant-id": tenantId || "",
+            "x-client-type": clientType,
           },
           body: JSON.stringify({
             message: text,
             conversationId: conversationIdRef.current,
             tenantId,
             channel: "voice",
+            agentId: activeAgentId,
+            clientType,
           }),
         },
-        25000
+        35000
       );
 
       if (!res.ok) {
         throw new Error(data?.error || `Error /chat (${res.status})`);
+      }
+
+      if (data?.agentId) {
+        setActiveAgentId(data.agentId);
       }
 
       const reply =
@@ -516,34 +533,51 @@ export default function VoiceWidget({
 
       setLastResponse(reply);
 
-      if (data?.ttsEnabled && data?.ttsText) {
-        relistenCooldownRef.current = Date.now() + 2200;
-        await playAssistantAudio(
-          data.ttsText,
-          data?.voiceAgent || data?.agentId || data?.agent || "general"
-        );
-      }
+      await speakText(
+        data?.ttsText || reply,
+        data?.voiceAgent || data?.agentId || activeAgentId
+      );
 
       setIsBusy(false);
-      setVoiceState("idle");
-      relistenCooldownRef.current = Date.now() + 1200;
-      scheduleRelisten(1200);
+      busyRef.current = false;
+
+      if (
+        callActiveRef.current &&
+        autoContinueRef.current &&
+        !stoppedRef.current
+      ) {
+        scheduleRelisten(isMobileDevice() ? 2400 : 2200);
+      } else {
+        setVoiceState("idle");
+      }
     } catch (error: any) {
       console.error(error);
       setVoiceState("idle");
+      setIsBusy(false);
+      busyRef.current = false;
+
       setLastResponse(
         error?.name === "AbortError"
-          ? "La respuesta tardó demasiado. Intenta otra vez."
+          ? "La respuesta tardó demasiado."
           : error?.message || "Error conectando con el asistente."
       );
-      setIsBusy(false);
-      relistenCooldownRef.current = Date.now() + 1600;
-      scheduleRelisten(1600);
+
+      if (
+        callActiveRef.current &&
+        autoContinueRef.current &&
+        !stoppedRef.current
+      ) {
+        scheduleRelisten(isMobileDevice() ? 2600 : 2400);
+      }
     }
   }
 
   async function transcribeAudioBlob(blob: Blob) {
     if (busyRef.current) return;
+
+    setIsBusy(true);
+    busyRef.current = true;
+    setVoiceState("thinking");
 
     try {
       const apiUrl =
@@ -551,32 +585,29 @@ export default function VoiceWidget({
         "http://localhost:3000";
 
       const tenantId = import.meta.env.VITE_TENANT_ID;
-
-      if (!blob || blob.size < 1800) {
-        setVoiceState("idle");
-        setLastResponse(
-          "Se recibió muy poco audio. Habla normal y haz una pausa hasta terminar."
-        );
-        scheduleRelisten(1200);
-        return;
-      }
-
-      const extension = blob.type.includes("mp4") ? "m4a" : "webm";
+      const clientType = isMobileDevice() ? "mobile" : "desktop";
 
       const formData = new FormData();
-      formData.append("audio", blob, `voice-message.${extension}`);
-      formData.append("tenantId", tenantId);
+      formData.append(
+        "audio",
+        blob,
+        `voice.${blob.type.includes("mp4") ? "m4a" : "webm"}`
+      );
+      formData.append("tenantId", tenantId || "");
+      formData.append("agentId", activeAgentId);
+      formData.append("clientType", clientType);
 
       const { res, data } = await safeFetchJson(
         `${apiUrl}/voice/transcribe`,
         {
           method: "POST",
           headers: {
-            "x-tenant-id": tenantId,
+            "x-tenant-id": tenantId || "",
+            "x-client-type": clientType,
           },
           body: formData,
         },
-        30000
+        60000
       );
 
       if (!res.ok) {
@@ -586,22 +617,39 @@ export default function VoiceWidget({
       const text = data?.transcript?.trim() || "";
       setTranscript(text);
 
-      if (shouldIgnoreTranscript(text)) {
+      if (!text || shouldIgnoreTranscript(text)) {
+        setIsBusy(false);
+        busyRef.current = false;
         setVoiceState("idle");
-        scheduleRelisten(1200);
+
+        if (
+          callActiveRef.current &&
+          autoContinueRef.current &&
+          !stoppedRef.current
+        ) {
+          scheduleRelisten(isMobileDevice() ? 1800 : 1600);
+        }
         return;
       }
 
+      setIsBusy(false);
+      busyRef.current = false;
+
       await sendVoiceTextToAssistant(text);
     } catch (error: any) {
-      console.error(error);
+      console.error("Error transcribiendo audio:", error);
+      setIsBusy(false);
+      busyRef.current = false;
       setVoiceState("idle");
-      setLastResponse(
-        error?.name === "AbortError"
-          ? "La transcripción tardó demasiado. Intenta otra vez."
-          : error?.message || "Error al transcribir el audio."
-      );
-      scheduleRelisten(1600);
+      setLastResponse(error?.message || "No se pudo transcribir el audio.");
+
+      if (
+        callActiveRef.current &&
+        autoContinueRef.current &&
+        !stoppedRef.current
+      ) {
+        scheduleRelisten(isMobileDevice() ? 2400 : 2200);
+      }
     }
   }
 
@@ -611,29 +659,31 @@ export default function VoiceWidget({
         echoCancellation: true,
         noiseSuppression: false,
         autoGainControl: false,
+        channelCount: 1,
       },
     });
     setMicPermission("granted");
     return stream;
   }
 
-  async function startUnifiedRecording() {
-    if (stoppedRef.current || !callActiveRef.current || busyRef.current) return;
-    if (speakingRef.current) return;
-
-    if (Date.now() < relistenCooldownRef.current) {
-      scheduleRelisten(700);
-      return;
-    }
+  async function startAudioRecording() {
+    if (busyRef.current || speakingRef.current) return;
 
     try {
+      if (recorderRef.current && recorderRef.current.state !== "inactive") {
+        try {
+          recorderRef.current.stop();
+        } catch {}
+      }
+
       stopRecorder();
       stopStream();
-      audioChunksRef.current = [];
-      setTranscript("");
 
       const stream = await requestMicPermissionSilently();
       streamRef.current = stream;
+      setShowPermissionScreen(false);
+      audioChunksRef.current = [];
+      setTranscript("");
 
       let mimeType = "";
       if (typeof MediaRecorder !== "undefined") {
@@ -653,99 +703,98 @@ export default function VoiceWidget({
       recorderRef.current = recorder;
 
       const AudioContextCtor =
-        window.AudioContext ||
-        (window as typeof window & { webkitAudioContext?: typeof AudioContext })
-          .webkitAudioContext;
+        window.AudioContext || (window as any).webkitAudioContext;
 
-      let analyser: AnalyserNode | null = null;
+      let audioContext: AudioContext | null = null;
       let source: MediaStreamAudioSourceNode | null = null;
+      let analyser: AnalyserNode | null = null;
       let dataArray: Uint8Array<ArrayBuffer> | null = null;
 
       if (AudioContextCtor) {
-        const audioContext = new AudioContextCtor();
-        audioContextRef.current = audioContext;
-
+        audioContext = new AudioContextCtor();
         source = audioContext.createMediaStreamSource(stream);
         analyser = audioContext.createAnalyser();
         analyser.fftSize = 2048;
         source.connect(analyser);
+        dataArray = new Uint8Array(new ArrayBuffer(analyser.fftSize));
 
-        dataArray = new Uint8Array(
-          new ArrayBuffer(analyser.fftSize)
-        ) as Uint8Array<ArrayBuffer>;
+        analyserContextRef.current = audioContext;
+        analyserSourceRef.current = source;
+        analyserNodeRef.current = analyser;
       }
 
-      const SILENCE_THRESHOLD = 3;
-      const SILENCE_DURATION_MS = 5200;
-      const MIN_RECORDING_TIME_MS = 2600;
-      const MAX_RECORDING_TIME_MS = 22000;
+      let startedAt = 0;
+      let silenceStartedAt: number | null = null;
 
-      function detectSilence() {
-        if (
-          !analyser ||
-          !dataArray ||
-          !recorderRef.current ||
-          recorderRef.current.state !== "recording"
-        ) {
+      const isMobile = isMobileDevice();
+      const MIN_RECORD_MS = isMobile ? 2200 : 2600;
+      const MAX_RECORD_MS = isMobile ? 18000 : 22000;
+      const END_SILENCE_MS = isMobile ? 4200 : 5200;
+      const SILENCE_THRESHOLD = isMobile ? 4 : 3;
+
+      function stopAndCleanup() {
+        clearSilenceMonitor();
+
+        try {
+          if (recorder.state === "recording") {
+            recorder.stop();
+          }
+        } catch {}
+      }
+
+      function monitorSilence() {
+        if (!callActiveRef.current || stoppedRef.current) {
+          stopAndCleanup();
           return;
         }
 
-        analyser.getByteTimeDomainData(
-          dataArray as Uint8Array<ArrayBuffer>
-        );
-
-        let maxDeviation = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-          const deviation = Math.abs(dataArray[i] - 128);
-          if (deviation > maxDeviation) {
-            maxDeviation = deviation;
-          }
-        }
-
-        if (maxDeviation > SILENCE_THRESHOLD) {
-          lastSoundTimeRef.current = Date.now();
-        }
+        if (recorder.state !== "recording") return;
 
         const now = Date.now();
-        const silenceDuration = now - lastSoundTimeRef.current;
-        const recordingElapsed = now - recordingStartedAtRef.current;
+        const elapsed = now - startedAt;
 
-        if (
-          recordingElapsed >= MIN_RECORDING_TIME_MS &&
-          silenceDuration >= SILENCE_DURATION_MS
-        ) {
-          if (
-            recorderRef.current &&
-            recorderRef.current.state === "recording"
-          ) {
-            recorderRef.current.stop();
-          }
+        if (elapsed >= MAX_RECORD_MS) {
+          stopAndCleanup();
           return;
         }
 
-        silenceFrameRef.current = requestAnimationFrame(detectSilence);
+        if (analyser && dataArray) {
+          analyser.getByteTimeDomainData(dataArray);
+
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i += 1) {
+            sum += Math.abs(dataArray[i] - 128);
+          }
+
+          const average = sum / dataArray.length;
+
+          if (average < SILENCE_THRESHOLD) {
+            if (silenceStartedAt === null) {
+              silenceStartedAt = now;
+            }
+
+            const silenceElapsed = now - silenceStartedAt;
+
+            if (elapsed >= MIN_RECORD_MS && silenceElapsed >= END_SILENCE_MS) {
+              stopAndCleanup();
+              return;
+            }
+          } else {
+            silenceStartedAt = null;
+          }
+        }
+
+        silenceMonitorRafRef.current = requestAnimationFrame(monitorSilence);
       }
 
       recorder.onstart = () => {
+        startedAt = Date.now();
+        silenceStartedAt = null;
         setVoiceState("recording");
-        lastSoundTimeRef.current = Date.now();
-        recordingStartedAtRef.current = Date.now();
 
-        if (analyser && dataArray) {
-          silenceFrameRef.current = requestAnimationFrame(detectSilence);
-        }
-
-        recordingStopTimerRef.current = window.setTimeout(() => {
-          if (
-            recorderRef.current &&
-            recorderRef.current.state === "recording" &&
-            callActiveRef.current &&
-            !stoppedRef.current &&
-            !busyRef.current
-          ) {
-            recorderRef.current.stop();
-          }
-        }, MAX_RECORDING_TIME_MS);
+        window.setTimeout(() => {
+          silenceMonitorRafRef.current = requestAnimationFrame(monitorSilence);
+        }, 250);
       };
 
       recorder.ondataavailable = (event) => {
@@ -755,16 +804,15 @@ export default function VoiceWidget({
       };
 
       recorder.onstop = async () => {
-        clearSilenceDetection();
+        clearSilenceMonitor();
 
         const chunks = audioChunksRef.current;
         audioChunksRef.current = [];
-
         stopStream();
 
         if (!chunks.length) {
           setVoiceState("idle");
-          scheduleRelisten(1200);
+          scheduleRelisten(1800);
           return;
         }
 
@@ -775,12 +823,13 @@ export default function VoiceWidget({
         await transcribeAudioBlob(blob);
       };
 
-      recorder.onerror = () => {
-        clearSilenceDetection();
+      recorder.onerror = (event: any) => {
+        console.error("MediaRecorder error:", event);
+        clearSilenceMonitor();
         stopStream();
         setVoiceState("idle");
         setLastResponse("El navegador falló al grabar el audio.");
-        scheduleRelisten(1600);
+        scheduleRelisten(2400);
       };
 
       recorder.start();
@@ -806,14 +855,11 @@ export default function VoiceWidget({
   async function activateMicrophone() {
     try {
       const stream = await requestMicPermissionSilently();
-      stopStream();
       stream.getTracks().forEach((track) => track.stop());
-
+      setMicPermission("granted");
       setShowPermissionScreen(false);
       setLastResponse("Micrófono activado. Ya puedes iniciar la llamada.");
     } catch (error: any) {
-      console.error("Permiso de micrófono:", error);
-
       if (error?.name === "NotAllowedError") {
         setMicPermission("denied");
         setLastResponse(
@@ -822,6 +868,7 @@ export default function VoiceWidget({
       } else {
         setLastResponse("No se pudo activar el micrófono.");
       }
+      setShowPermissionScreen(true);
     }
   }
 
@@ -833,16 +880,20 @@ export default function VoiceWidget({
 
     stoppedRef.current = false;
     callActiveRef.current = true;
-    relistenCooldownRef.current = 0;
-    lastAcceptedTranscriptRef.current = "";
-
     setCallActive(true);
     setSeconds(0);
     setTranscript("");
-    setLastResponse("La llamada ha comenzado. Puedes hablar.");
+    setLastResponse(`La llamada con ${assistantName} ha comenzado.`);
+    setShowPermissionScreen(false);
+    lastAcceptedTranscriptRef.current = "";
 
-    void startUnifiedRecording();
+    void startAudioRecording();
   }
+
+  const permissionHelp =
+    micPermission === "denied"
+      ? "Tu navegador bloqueó el micrófono. Actívalo en la configuración del sitio y vuelve a abrir esta ventana."
+      : `Para comenzar, permite el uso del micrófono. Después podrás hablar con ${assistantName} y, si dejas la conversación continua encendida, seguirá escuchando automáticamente.`;
 
   const orbColor =
     voiceState === "recording"
@@ -852,11 +903,6 @@ export default function VoiceWidget({
       : voiceState === "speaking"
       ? "linear-gradient(135deg, #facc15, #f59e0b)"
       : "linear-gradient(135deg, #e2e8f0, #cbd5e1)";
-
-  const permissionHelp =
-    micPermission === "denied"
-      ? "El acceso al micrófono está bloqueado. Abre la configuración del sitio y cámbialo a Permitir."
-      : "Para hablar con el asistente, activa el micrófono una sola vez.";
 
   return (
     <>
@@ -989,8 +1035,7 @@ export default function VoiceWidget({
                     lineHeight: 1.6,
                   }}
                 >
-                  <strong>Consejo:</strong> usa audífonos o mantén el volumen bajo
-                  si activas conversación continua.
+                  <strong>Consejo:</strong> habla normal y espera un momento al terminar la frase. Ya no necesitas colgar para que se transcriba.
                 </div>
 
                 <button
