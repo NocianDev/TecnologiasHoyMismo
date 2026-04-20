@@ -27,13 +27,13 @@ app.post("/create-checkout-session", async (req, res) => {
     const { plan } = req.body;
 
     const plans = {
-      landing: { name: "Landing Page", price: 1000 },
-      gps: { name: "GPS", price: 1000 },
-      campana: { name: "Campaña digital", price: 1000 },
-      ia: { name: "Proyecto IA", price: 1000 },
-      chatbot: { name: "Chatbot Inicial", price: 1000 },
-      api: { name: "API / Aplicación", price: 1000 },
-    };
+  landing: { name: "Landing Page", price: 699900 },
+  gps: { name: "GPS", price: 399900 },
+  campana: { name: "Campaña digital", price: 599900 },
+  ia: { name: "Proyecto IA", price: 1499900 },
+  chatbot: { name: "Chatbot Inicial", price: 499900 },
+  api: { name: "API / Aplicación", price: 999900 },
+};
 
     const selectedPlan = plans[plan];
 

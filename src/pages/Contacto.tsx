@@ -169,42 +169,42 @@ export default function Contacto() {
                 <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {[
                     {
-                      title: "Landing Page",
-                      description: "Página profesional para negocio o servicio.",
-                      price: "$10 MXN",
-                      plan: "landing",
-                    },
-                    {
-                      title: "GPS",
-                      description: "GPS para rastreo de cargamento.",
-                      price: "$10 MXN",
-                      plan: "gps",
-                    },
-                    {
-                      title: "Campaña digital",
-                      description:
-                        "Campaña de marketing digital para promocionar tu producto o servicio.",
-                      price: "$10 MXN",
-                      plan: "campana",
-                    },
-                    {
-                      title: "Proyecto IA",
-                      description: "Solución de inteligencia artificial para tu negocio.",
-                      price: "$10 MXN",
-                      plan: "ia",
-                    },
-                    {
-                      title: "Chatbot Inicial",
-                      description: "Bot de atención para sitio o proceso simple.",
-                      price: "$10 MXN",
-                      plan: "chatbot",
-                    },
-                    {
-                      title: "API / Aplicación",
-                      description: "Integración base entre sistemas o formularios.",
-                      price: "$10 MXN",
-                      plan: "api",
-                    },
+    title: "Landing Page",
+    description: "Página profesional para negocio o servicio.",
+    price: "$6,999 MXN",
+    plan: "landing",
+  },
+  {
+    title: "GPS",
+    description: "GPS para rastreo de cargamento.",
+    price: "$3,999 MXN",
+    plan: "gps",
+  },
+  {
+    title: "Campaña digital",
+    description:
+      "Campaña de marketing digital para promocionar tu producto o servicio.",
+    price: "$5,999 MXN",
+    plan: "campana",
+  },
+  {
+    title: "Proyecto IA",
+    description: "Solución de inteligencia artificial para tu negocio.",
+    price: "$14,999 MXN",
+    plan: "ia",
+  },
+  {
+    title: "Chatbot Inicial",
+    description: "Bot de atención para sitio o proceso simple.",
+    price: "$4,999 MXN",
+    plan: "chatbot",
+  },
+  {
+    title: "API / Aplicación",
+    description: "Integración base entre sistemas o formularios.",
+    price: "$9,999 MXN",
+    plan: "api",
+  },
                   ].map((item) => (
                     <div
                       key={item.plan}
