@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FaMicrophone } from "react-icons/fa";
 
 type VoiceState = "idle" | "recording" | "thinking" | "speaking";
 type MicPermissionState = "unknown" | "prompt" | "granted" | "denied";
@@ -1262,27 +1263,29 @@ export default function VoiceWidget({
         </div>
       )}
 
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        style={{
-          position: "fixed",
-          right: "92px",
-          bottom: "20px",
-          width: "64px",
-          height: "64px",
-          borderRadius: "50%",
-          background: "linear-gradient(135deg, #22c55e, #16a34a)",
-          border: "none",
-          fontSize: "24px",
-          cursor: "pointer",
-          boxShadow: "0 18px 40px rgba(34, 197, 94, 0.35)",
-          zIndex: 10000,
-        }}
-        aria-label="Abrir voz"
-        title="Abrir asistente de voz"
-      >
-        🎙️
-      </button>
+      <div className="fixed bottom-6 right-[92px] z-[999] sm:bottom-8 sm:right-[104px] group">
+  <span className="relative flex h-14 w-14 items-center justify-center sm:h-16 sm:w-16">
+    
+    {/* DESTELLO */}
+    <span className="absolute inset-0 rounded-full bg-yellow-400/30 animate-ping" />
+    
+    {/* GLOW */}
+    <span className="absolute inset-0 rounded-full bg-yellow-400/20 blur-md animate-pulse" />
+
+    {/* BOTÓN */}
+    <button
+      onClick={() => setIsOpen(!isOpen)}
+      className="relative flex h-14 w-14 items-center justify-center rounded-full bg-yellow-400 shadow-[0_10px_40px_rgba(250,204,21,0.6)] transition-all duration-300 group-hover:scale-110 group-hover:bg-yellow-500 sm:h-16 sm:w-16"
+      aria-label="Abrir asistente de voz"
+      title="Abrir asistente de voz"
+    >
+      <FaMicrophone className="h-7 w-7 text-black" />
+    </button>
+
+  </span>
+</div>
     </>
   );
 }
+
+//voicewidget.tsx

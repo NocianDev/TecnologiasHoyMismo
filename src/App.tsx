@@ -2,6 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
 
+// 👇 IMPORTANTE
+import VoiceWidget from "./components/assistant/VoiceWidget";
+
 import Home from "./pages/Home";
 import Servicios from "./pages/Servicios";
 import IA from "./pages/IA";
@@ -29,7 +32,9 @@ function App() {
         <Route path="/ia/demo" element={<AssistantDemo />} />
       </Routes>
 
+      {/* 🔥 BOTONES GLOBALES */}
       <WhatsAppButton />
+      <VoiceWidget /> {/* 👈 ESTE ES EL IMPORTANTE */}
     </>
   );
 }
