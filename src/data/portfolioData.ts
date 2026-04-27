@@ -8,6 +8,11 @@ export type PortfolioProject = {
   extra: string;
   color: "green" | "purple" | "cyan" | "blue" | "yellow";
   featured?: boolean;
+
+  // 🔥 NUEVO (NO rompe nada)
+  image?: string;
+  url?: string;
+  type?: string;
 };
 
 export const IA_PROJECTS: PortfolioProject[] = [
@@ -15,77 +20,139 @@ export const IA_PROJECTS: PortfolioProject[] = [
     title: "Hoy Mismo Assistant — Recepcionista virtual con IA",
     subtitle: "Solución propia de inteligencia artificial",
     description:
-      "Asistente inteligente diseñado para responder llamadas, orientar clientes, automatizar conversaciones y mejorar la atención de negocios, clínicas y empresas con disponibilidad 24/7.",
+      "Asistente inteligente diseñado para responder llamadas, orientar clientes y automatizar conversaciones.",
     tech: ["OpenRouter", "ElevenLabs", "OpenAI", "MongoDB", "Voice AI"],
     metric: "24/7",
     metricLabel: "Disponibilidad",
     extra:
-      "Plataforma pensada para atención automatizada, captación de leads, seguimiento conversacional y evolución hacia experiencias de voz más naturales y profesionales.",
+      "Captación de leads y atención automatizada con voz.",
     color: "purple",
     featured: true,
+
+    // opcional
+    image: "/images/portfolio/ia-assistant.png",
+    type: "Inteligencia Artificial",
   },
 ];
 
 export const API_PROJECTS: PortfolioProject[] = [
   {
-  title: "A Huevo Es Verde",
-  subtitle: "API para gestión de menú y pedidos de restaurante",
-  description:
-    "Desarrollo de API enfocada en la gestión eficiente de menú, productos y pedidos, permitiendo integrar sistemas digitales para restaurantes de jugos y alimentos.",
-  tech: ["Node.js", "Express", "REST API", "Database", "Integration"],
-  metric: "API + Integración",
-  metricLabel: "Automatización operativa",
-  extra:
-    "Sistema backend diseñado para centralizar la información del negocio, facilitando la conexión con aplicaciones web, sistemas de pedidos y plataformas externas, mejorando la eficiencia y escalabilidad del restaurante.",
-  color: "yellow",
-},
-{
-    title: "HoyMismoGPS V2 — Fleet Management",
-    subtitle: "Sistema de gestión y monitoreo",
+    title: "A Huevo Es Verde",
+    subtitle: "API para restaurante",
     description:
-      "Plataforma de gestión de flotas con monitoreo de activos, visualización operativa y control logístico diseñado para empresas que requieren seguimiento en tiempo real.",
-    tech: ["Cloud Run", "BigQuery", "Firestore", "Pub/Sub", "Logistics"],
+      "Gestión de menú, productos y pedidos para restaurante.",
+    tech: ["Node.js", "Express", "REST API"],
+    metric: "API",
+    metricLabel: "Automatización",
+    extra:
+      "Centraliza información y conecta sistemas.",
+    color: "yellow",
+
+    image: "/images/portfolio/api.png",
+    type: "API",
+  },
+  {
+    title: "HoyMismoGPS V2",
+    subtitle: "Sistema de monitoreo",
+    description:
+      "Gestión de flotas y activos en tiempo real.",
+    tech: ["Cloud Run", "BigQuery", "Firestore"],
     metric: "500+",
     metricLabel: "Activos",
     extra:
-      "Sistema empresarial orientado a trazabilidad, monitoreo y control operativo de unidades y activos.",
+      "Control logístico empresarial.",
     color: "cyan",
     featured: true,
+
+    image: "/images/portfolio/gps.png",
+    type: "Sistema",
   },
 ];
 
 export const CHATBOT_PROJECTS: PortfolioProject[] = [
-  
   {
     title: "HoyMismo Dashboard",
-    subtitle: "Automatización y gestión interna",
+    subtitle: "Gestión interna",
     description:
-      "Dashboard integral orientado a control operativo, gestión de procesos y visualización de información en tiempo real para mejorar el seguimiento interno de operaciones.",
-    tech: ["Next.js", "Firebase", "Dashboards", "Automation", "Analytics"],
+      "Control operativo y visualización de datos.",
+    tech: ["Next.js", "Firebase", "Dashboards"],
     metric: "All-in-One",
     metricLabel: "Gestión",
     extra:
-      "Solución enfocada en centralizar información, automatizar procesos internos y mejorar la visibilidad de las operaciones desde un solo entorno.",
+      "Centraliza procesos internos.",
     color: "blue",
+
+    image: "/images/portfolio/dashboard.png",
+    type: "Dashboard",
   },
 ];
 
 export const SERVICE_PROJECTS: PortfolioProject[] = [
+  // 🔥 TU PROYECTO REAL
   {
-  title: "Agencia Aduanal Hoy Mismo",
-  subtitle: "Sitio web para servicios de comercio exterior y logística",
-  description:
-    "Desarrollo web enfocado en posicionamiento digital para una agencia aduanal, destacando servicios de importación, exportación, gestión de trámites y asesoría en comercio exterior.",
+    title: "Agencia Aduanal Hoy Mismo",
+    subtitle: "Sitio web de comercio exterior",
+    description:
+      "Desarrollo web enfocado en posicionamiento digital para una agencia aduanal.",
+    tech: ["React", "Vite", "Tailwind", "SEO"],
+    metric: "Web + Branding",
+    metricLabel: "Presencia digital",
+    extra:
+      "Transmite confianza y genera contacto con clientes.",
+    color: "yellow",
+    featured: true,
 
-  tech: ["React", "Vite", "Tailwind", "Responsive Design", "SEO"],
+    image: "/images/portfolio/agencia-aduanal.png",
+    type: "Página web",
+    url: "#",
+  },
 
-  metric: "Web + Branding",
-  metricLabel: "Presencia digital",
+  // 🔥 SERVICIOS GENERALES (lo que querías agregar)
+  {
+    title: "Landing page para negocio",
+    subtitle: "Captación de clientes",
+    description:
+      "Página enfocada en generar contactos rápidos.",
+    tech: ["React", "UX", "WhatsApp"],
+    metric: "Alta conversión",
+    metricLabel: "Ventas",
+    extra:
+      "Ideal para negocios locales.",
+    color: "blue",
 
-  extra:
-    "Proyecto orientado a transmitir confianza, profesionalismo y claridad en procesos aduanales, facilitando que empresas comprendan los servicios, requisitos y beneficios de trabajar con la agencia, además de generar contacto directo y oportunidades de negocio.",
+    image: "/images/portfolio/landing.png",
+    type: "Landing page",
+  },
 
-  color: "yellow",
-}
-  
+  {
+    title: "Web con asistente IA",
+    subtitle: "Automatización de atención",
+    description:
+      "Sitio web con IA que responde clientes.",
+    tech: ["React", "Node", "IA"],
+    metric: "24/7",
+    metricLabel: "Atención",
+    extra:
+      "Automatiza ventas y soporte.",
+    color: "purple",
+
+    image: "/images/portfolio/web-ia.png",
+    type: "Web + IA",
+  },
+
+  {
+    title: "Campañas digitales",
+    subtitle: "Marketing en redes",
+    description:
+      "Estrategias para atraer clientes desde redes sociales.",
+    tech: ["Meta Ads", "Contenido", "Leads"],
+    metric: "Más alcance",
+    metricLabel: "Publicidad",
+    extra:
+      "Enfoque en ventas reales.",
+    color: "cyan",
+
+    image: "/images/portfolio/marketing.png",
+    type: "Marketing",
+  },
 ];
